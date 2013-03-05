@@ -67,4 +67,73 @@ public class Prikaz
     {
         return (aParameter != null);
     }
+
+    // implementacie prikazov:
+    /**
+     * Vypise text pomocnika do terminaloveho okna. Text obsahuje zoznam moznych
+     * prikazov.
+     */
+    private void vypisNapovedu() {
+        System.out.println("Zabludil si. Si sam. Tulas sa po fakulte.");
+        System.out.println();
+        System.out.println("Mozes pouzit tieto prikazy:");
+        System.out.println("   chod ukonci pomoc");
+    }
+
+    /** 
+     * Vykona pokus o prechod do miestnosti urcenej danym smerom.
+     * Ak je tym smerom vychod, hrac prejde do novej miestnosti.
+     * Inak sa vypise chybova sprava do terminaloveho okna.
+     */
+    private void chodDoMiestnosti(Hrac paHrac) {
+        if (!this.maParameter()) {
+            System.out.println("Chod kam?");
+            return;
+        }
+        String smer = this.dajParameter();
+        if (paHrac.chodDoMiestnosti(smer)) {
+            paHrac.dajAktualnuMiestnost().infoOMiestnosti();
+        } else {
+            System.out.println("Tam nie je vychod!");
+        }
+    }
+
+    /**
+     * Ukonci hru. Skotroluje cely prikaz a zisti, ci je naozaj koniec hry.
+     * Prikaz ukoncenia nema parameter.
+     *
+     * @return true, if this command quits the game, false otherwise.
+     * @return true, ak prikaz konci hru, inak false.
+     */
+    private boolean ukonciHru() {
+        if (this.maParameter()) {
+            System.out.println("Ukonci, co?");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    /**
+     * Prevezne prikaz a vykona ho.
+     *
+     * @param paPrikaz prikaz, ktory ma byt vykonany.
+     * @return true ak prikaz ukonci hru, inak vrati false.
+     */
+    boolean vykonajPrikaz(Hrac paHrac) {
+        boolean jeKoniec = false;
+        if (this.jeNeznamy()) {
+            System.out.println("Nerozumiem, co mas na mysli...");
+            return false;
+        }
+        String nazovPrikazu = this.dajNazov();
+        if (nazovPrikazu.equals("pomoc")) {
+            vypisNapovedu();
+        } else if (nazovPrikazu.equals("chod")) {
+            chodDoMiestnosti(paHrac);
+        } else if (nazovPrikazu.equals("ukonci")) {
+            jeKoniec = ukonciHru();
+        }
+        return jeKoniec;
+    }
 }

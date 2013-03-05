@@ -1,10 +1,12 @@
 package wof00;
 
+import java.util.HashMap;
+
 /**
  * Trieda Miestnost realizuje jednu miestnost/priestor v celom priestore hry.
  * Kazda "miestnost" je z inymi miestnostami spojena vychodmi. 
- * Vychody z miestnosti su oznacovane svetovymi stranami sever, vychod, juh
- * a zapad. Pre kazdy vychod si miestnost pamata odkaz na susednu miestnost
+ * Vychody z miestnosti su oznacovane svetovymi stranami.
+ * Pre kazdy vychod si miestnost pamata odkaz na susednu miestnost
  * alebo null, ak tym smerom vychod nema.
  *
  * @author  Michael Kolling, David J. Barnes
@@ -15,11 +17,10 @@ package wof00;
 public class Miestnost 
 {
 
-    public String aPopisMiestnosti;
-    public Miestnost aSevernyVychod;
-    public Miestnost aJuznyVychod;
-    public Miestnost aVychodnyVychod;
-    public Miestnost aZapadnyVychod;
+    private String aPopisMiestnosti;
+    private HashMap<String, Miestnost> aVychody;
+    private final String aNazov;
+    
 
     /**
      * Vytvori miestnost popis ktorej je v parametrom.
@@ -28,33 +29,29 @@ public class Miestnost
      * 
      * @param paPopis text popisu miestnosti.
      */
-    public Miestnost(String paPopis) {
+    public Miestnost(String paNazov, String paPopis) {
+        aNazov = paNazov;
         this.aPopisMiestnosti = paPopis;
+        aVychody = new HashMap<String, Miestnost>();
     }
 
     /**
      * Nastavi vychody z miestnosti. Kazdy vychod je urceny bud odkazom 
      * na miestnost alebo hodnotou null, ak vychod tym smerom neexistuje.
      * 
-     * @param paSever miestnost smerom na sever.
-     * @param paVychod miestnost smerom na vychod.
-     * @param paJuh miestnost smerom na juh.
-     * @param paZapad miestnost smerom na zapad.
+     * @param paSmer Smer vychodu
+     * @param paMiestnostVSmere Miestnost v danom smere
      */
-    public void nastavVychody(Miestnost paSever, Miestnost paVychod, Miestnost paJuh, Miestnost paZapad) {
-        if (paSever != null) {
-            aSevernyVychod = paSever;
+    public void nastavVychod(Miestnost paMiestnostVSmere, boolean paNastavOpacny) {
+        aVychody.put(paMiestnostVSmere.dajNazov(), paMiestnostVSmere);
+        if (paNastavOpacny) {
+            paMiestnostVSmere.nastavVychod(this, false);
         }
-        if (paVychod != null) {
-            aVychodnyVychod = paVychod;
-        }
-        if (paJuh != null) {
-            aJuznyVychod = paJuh;
-        }
-        if (paZapad != null) {
-            //</editor-fold>
-            aZapadnyVychod = paZapad;
-        }
+    }
+    
+    public void nastavVychod(Miestnost paMiestnostVSmere)
+    {
+        this.nastavVychod(paMiestnostVSmere, true);
     }
 
     /**
@@ -62,5 +59,25 @@ public class Miestnost
      */
     public String dajPopis() {
         return aPopisMiestnosti;
+    }
+    
+    public String dajNazov() {
+        return aNazov;
+    }
+
+    public void infoOMiestnosti() {
+        System.out.println("Teraz si v miestnosti " + this.dajNazov());
+        System.out.println(this.dajPopis());
+        System.out.print("Vychody: ");
+        
+        for (String smer : this.aVychody.keySet()) {
+            System.out.print(smer + " ");
+        }
+        
+        System.out.println();
+    }
+
+    Miestnost dajVychodVSmere(String smer) {
+        return aVychody.get(smer);
     }
 }

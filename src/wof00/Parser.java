@@ -45,7 +45,7 @@ public class Parser
         if(tokenizer.hasNext()) {
             prikaz = tokenizer.next();      // prve slovo
             if(tokenizer.hasNext()) {
-                parameter = tokenizer.next();      // druhe slovo
+                parameter = tokenizer.nextLine().trim();      // druhe slovo
                 // vsimnite si, ze zbytok textu sa ignoruje
             }
         }
