@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 public class Parser 
 {
-    private NazvyPrikazov aPrikazy;  // odkaz na pripustne nazvy prikazov
+    private ZoznamPrikazov aPrikazy;  // odkaz na pripustne nazvy prikazov
     private Scanner aCitac;         // zdroj vstupov od hraca
 
     /**
@@ -23,7 +23,7 @@ public class Parser
      */
     public Parser() 
     {
-        aPrikazy = new NazvyPrikazov();
+        aPrikazy = ZoznamPrikazov.dajInstanciu();
         aCitac = new Scanner(System.in);
     }
 
