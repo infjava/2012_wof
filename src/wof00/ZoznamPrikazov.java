@@ -32,6 +32,10 @@ public class ZoznamPrikazov
         aVykonavace.put("ukonci", new VykonavacUkonci());
         aVykonavace.put("pomoc", new VykonavacPomoc());
         aVykonavace.put("chod", new VykonavacChod());
+        aVykonavace.put("zober", new VykonavacZober());
+        aVykonavace.put("ukaz", new VykonavacUkaz());
+        aVykonavace.put("inventar", new VykonavacInventar());
+        aVykonavace.put("zahod", new VykonavacZahod());
     }
 
     /**

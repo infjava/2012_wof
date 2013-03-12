@@ -1,6 +1,7 @@
 package wof00;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 
 /**
  * Trieda Miestnost realizuje jednu miestnost/priestor v celom priestore hry.
@@ -20,6 +21,7 @@ public class Miestnost
     private String aPopisMiestnosti;
     private HashMap<String, Miestnost> aVychody;
     private final String aNazov;
+    private TreeMap<String, Predmet> aPredmety;
     
 
     /**
@@ -33,6 +35,7 @@ public class Miestnost
         aNazov = paNazov;
         this.aPopisMiestnosti = paPopis;
         aVychody = new HashMap<String, Miestnost>();
+        aPredmety = new TreeMap<String, Predmet>();
     }
 
     /**
@@ -71,13 +74,31 @@ public class Miestnost
         System.out.print("Vychody: ");
         
         for (String smer : this.aVychody.keySet()) {
-            System.out.print(smer + " ");
+            System.out.print(smer + ", ");
         }
         
         System.out.println();
+        
+        if (!aPredmety.isEmpty()) {
+            System.out.print("Predmety: ");
+        
+            for (String predmet : this.aPredmety.keySet()) {
+                System.out.print(predmet + ", ");
+            }
+            
+            System.out.println();
+        }
     }
 
     Miestnost dajVychodVSmere(String smer) {
         return aVychody.get(smer);
+    }
+
+    void pridajPredmet(Predmet paPredmet) {
+        aPredmety.put(paPredmet.dajNazov(), paPredmet);
+    }
+
+    Predmet zoberPredmet(String paNazovPredmetu) {
+        return aPredmety.remove(paNazovPredmetu);
     }
 }

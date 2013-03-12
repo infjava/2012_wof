@@ -27,6 +27,8 @@ public class Mapa {
         Miestnost ucebnaA7 = new Miestnost("Ucebna A7", "");
         Miestnost bufet = new Miestnost("Bufet", "");
         
+        Predmet brozurka = new Predmet("brozurka", "Tu si mozem pozriet, kde sa mozem zamestnat");
+        
         terasa.nastavVychod(vratnica);
         
         //vratnica.nastavVychod(terasa);
@@ -35,6 +37,7 @@ public class Mapa {
         vratnica.nastavVychod(chodbaA);
         
         ic.nastavVychod(vratnica);
+        ic.pridajPredmet(brozurka);
         
         chodbaB.nastavVychod(labakB2);
         chodbaB.nastavVychod(wc);
