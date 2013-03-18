@@ -19,10 +19,17 @@ class VykonavacChod implements IVykonavac {
             System.out.println("Chod kam?");
             return false;
         }
-        if (paHrac.chodDoMiestnosti(paParameter)) {
-            paHrac.dajAktualnuMiestnost().infoOMiestnosti();
-        } else {
-            System.out.println("Tam nie je vychod!");
+        
+        switch (paHrac.chodDoMiestnosti(paParameter)) {
+            case neexistujuciVychod:
+                System.out.println("Tam nie je vychod!");
+                break;
+            case zamknute:
+                System.out.println("Vychod je zamknuty!");
+                break;
+            case ziadna:
+                paHrac.dajAktualnuMiestnost().infoOMiestnosti();
+                break;
         }
         
         return false;

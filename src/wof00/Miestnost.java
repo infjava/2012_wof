@@ -19,7 +19,7 @@ public class Miestnost
 {
 
     private String aPopisMiestnosti;
-    private HashMap<String, Miestnost> aVychody;
+    private HashMap<String, Dvere> aVychody;
     private final String aNazov;
     private TreeMap<String, Predmet> aPredmety;
     
@@ -34,7 +34,7 @@ public class Miestnost
     public Miestnost(String paNazov, String paPopis) {
         aNazov = paNazov;
         this.aPopisMiestnosti = paPopis;
-        aVychody = new HashMap<String, Miestnost>();
+        aVychody = new HashMap<String, Dvere>();
         aPredmety = new TreeMap<String, Predmet>();
     }
 
@@ -45,16 +45,21 @@ public class Miestnost
      * @param paSmer Smer vychodu
      * @param paMiestnostVSmere Miestnost v danom smere
      */
-    public void nastavVychod(Miestnost paMiestnostVSmere, boolean paNastavOpacny) {
-        aVychody.put(paMiestnostVSmere.dajNazov(), paMiestnostVSmere);
+    public void nastavVychod(Dvere paDvereVSmere, boolean paNastavOpacny) {
+        aVychody.put(paDvereVSmere.dajNazov().toLowerCase(), paDvereVSmere);
         if (paNastavOpacny) {
-            paMiestnostVSmere.nastavVychod(this, false);
+            paDvereVSmere
+                    .dajMiestnost()
+                    .nastavVychod(
+                        paDvereVSmere.vytvorPodobne(this),
+                        false
+                    );
         }
     }
     
-    public void nastavVychod(Miestnost paMiestnostVSmere)
+    public void nastavVychod(Dvere paDvereVSmere)
     {
-        this.nastavVychod(paMiestnostVSmere, true);
+        this.nastavVychod(paDvereVSmere, true);
     }
 
     /**
@@ -90,8 +95,8 @@ public class Miestnost
         }
     }
 
-    Miestnost dajVychodVSmere(String smer) {
-        return aVychody.get(smer);
+    Miestnost dajMiestnostVSmere(String paSmer) {
+        return aVychody.get(paSmer).dajMiestnost();
     }
 
     void pridajPredmet(Predmet paPredmet) {
@@ -100,5 +105,9 @@ public class Miestnost
 
     Predmet zoberPredmet(String paNazovPredmetu) {
         return aPredmety.remove(paNazovPredmetu);
+    }
+
+    Dvere dajDvereVSmere(String paSmer) {
+        return aVychody.get(paSmer);
     }
 }

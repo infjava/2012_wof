@@ -29,34 +29,34 @@ public class Mapa {
         
         Predmet brozurka = new Predmet("brozurka", "Tu si mozem pozriet, kde sa mozem zamestnat");
         
-        terasa.nastavVychod(vratnica);
+        terasa.nastavVychod(new Dvere(vratnica));
         
         //vratnica.nastavVychod(terasa);
-        vratnica.nastavVychod(ic);
-        vratnica.nastavVychod(chodbaB);
-        vratnica.nastavVychod(chodbaA);
+        vratnica.nastavVychod(new Dvere(ic));
+        vratnica.nastavVychod(new Dvere(chodbaB));
+        vratnica.nastavVychod(new Dvere(chodbaA));
         
-        ic.nastavVychod(vratnica);
+        ic.nastavVychod(new Dvere(vratnica));
         ic.pridajPredmet(brozurka);
         
-        chodbaB.nastavVychod(labakB2);
-        chodbaB.nastavVychod(wc);
-        chodbaB.nastavVychod(vratnica);
+        chodbaB.nastavVychod(new Dvere(labakB2));
+        chodbaB.nastavVychod(new Dvere(wc));
+        chodbaB.nastavVychod(new Dvere(vratnica));
         
-        labakB2.nastavVychod(chodbaB);
+        labakB2.nastavVychod(new Dvere(chodbaB));
         
-        wc.nastavVychod(chodbaB);
+        wc.nastavVychod(new Dvere(chodbaB));
         
-        chodbaA.nastavVychod(ucebnaA7);
-        chodbaA.nastavVychod(bufet);
-        chodbaA.nastavVychod(vratnica);
-        chodbaA.nastavVychod(labakA13);
+        chodbaA.nastavVychod(new Dvere(ucebnaA7));
+        chodbaA.nastavVychod(new Dvere(bufet));
+        chodbaA.nastavVychod(new Dvere(vratnica));
+        chodbaA.nastavVychod(new Dvere(labakA13));
         
-        labakA13.nastavVychod(chodbaA);
+        labakA13.nastavVychod(new Dvere(chodbaA));
 
-        ucebnaA7.nastavVychod(chodbaA);
+        ucebnaA7.nastavVychod(new Dvere(chodbaA));
         
-        bufet.nastavVychod(chodbaA);
+        bufet.nastavVychod(new Dvere(chodbaA));
         
         aVstupnaMiestnost = terasa;
     }

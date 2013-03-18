@@ -43,9 +43,9 @@ public class Parser
         // najde prve dve slova v riadku 
         Scanner tokenizer = new Scanner(vstupnyRiadok);
         if(tokenizer.hasNext()) {
-            prikaz = tokenizer.next();      // prve slovo
+            prikaz = tokenizer.next().toLowerCase();      // prve slovo
             if(tokenizer.hasNext()) {
-                parameter = tokenizer.nextLine().trim();      // druhe slovo
+                parameter = tokenizer.nextLine().trim().toLowerCase();      // druhe slovo
                 // vsimnite si, ze zbytok textu sa ignoruje
             }
         }

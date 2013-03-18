@@ -24,4 +24,9 @@ public class Predmet {
     public String dajPopis() {
         return aPopis;
     }
+
+    boolean pouzi(String paParameter, Hrac paHrac) {
+        System.out.println("Tak to teda nie! " + aNazov + " sa neda pouzit!");
+        return false;
+    }
 }

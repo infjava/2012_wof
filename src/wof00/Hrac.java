@@ -33,16 +33,18 @@ class Hrac {
     /**
      * @return True, ak sa podari prejst do miestnosti v danom smere
      */
-    public boolean chodDoMiestnosti(String paSmer) {
-        final Miestnost miestnostVSmere = aAktualnaMiestnost.dajVychodVSmere(paSmer);
+    public ChybaVchadzaniaDoMiestnosti chodDoMiestnosti(String paSmer) {
+        final Dvere dvereVSmere = aAktualnaMiestnost.dajDvereVSmere(paSmer);
 
-        if (miestnostVSmere == null) {
-            return false;
+        if (dvereVSmere == null) {
+            return ChybaVchadzaniaDoMiestnosti.neexistujuciVychod;
+        } else if (dvereVSmere.suZamknute()) {
+            return ChybaVchadzaniaDoMiestnosti.zamknute;
         }
 
-        aAktualnaMiestnost = miestnostVSmere;
+        aAktualnaMiestnost = dvereVSmere.dajMiestnost();
 
-        return true;
+        return ChybaVchadzaniaDoMiestnosti.ziadna;
     }
 
     void zober(String paNazovPredmetu) {
@@ -81,5 +83,14 @@ class Hrac {
         } else {
             System.out.println(predmet.dajPopis());
         }
+    }
+
+    Predmet dajPredmet(String paNazovPredmetu) {
+        return aInventar.get(paNazovPredmetu);
+    }
+
+    boolean pouziPredmet(String paNazovPredmetu, String paParameter) {
+        Predmet predmet = aInventar.get(paNazovPredmetu);
+        return predmet.pouzi(paParameter, this);
     }
 }
