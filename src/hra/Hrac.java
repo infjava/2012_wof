@@ -2,24 +2,28 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package wof00;
+package hra;
 
+import wof00.veci.IVec;
+import wof00.prostredie.IDvere;
+import wof00.prostredie.ChybaVchadzaniaDoMiestnosti;
+import wof00.prostredie.Miestnost;
 import java.util.TreeMap;
 
 /**
  *
  * @author janik
  */
-class Hrac {
+public class Hrac {
 
     private final String aMenoHraca;
     private Miestnost aAktualnaMiestnost;
-    private TreeMap<String, Predmet> aInventar;
+    private TreeMap<String, IVec> aInventar;
 
     public Hrac(String paMenoHraca, Miestnost paVstupnaMiestnost) {
         this.aMenoHraca = paMenoHraca;
         this.aAktualnaMiestnost = paVstupnaMiestnost;
-        aInventar = new TreeMap<String, Predmet>();
+        aInventar = new TreeMap<String, IVec>();
     }
 
     public String dajMenoHraca() {
@@ -34,7 +38,7 @@ class Hrac {
      * @return True, ak sa podari prejst do miestnosti v danom smere
      */
     public ChybaVchadzaniaDoMiestnosti chodDoMiestnosti(String paSmer) {
-        final Dvere dvereVSmere = aAktualnaMiestnost.dajDvereVSmere(paSmer);
+        final IDvere dvereVSmere = aAktualnaMiestnost.dajDvereVSmere(paSmer);
 
         if (dvereVSmere == null) {
             return ChybaVchadzaniaDoMiestnosti.neexistujuciVychod;
@@ -43,12 +47,13 @@ class Hrac {
         }
 
         aAktualnaMiestnost = dvereVSmere.dajMiestnost();
+        dvereVSmere.presielCezVas(this);
 
         return ChybaVchadzaniaDoMiestnosti.ziadna;
     }
 
-    void zober(String paNazovPredmetu) {
-        Predmet predmet = aAktualnaMiestnost.zoberPredmet(paNazovPredmetu);
+    public void zober(String paNazovPredmetu) {
+        IVec predmet = aAktualnaMiestnost.zoberPredmet(paNazovPredmetu);
         if (predmet == null) {
             System.out.println("Predmet som proste nenasiel! Pozeraj lepsie!");
         } else {
@@ -57,7 +62,7 @@ class Hrac {
         }
     }
 
-    void vypisInventar() {
+    public void vypisInventar() {
         System.out.print("Predmety: ");
         for (String predmet : aInventar.keySet()) {
             System.out.print(predmet + ", ");
@@ -65,8 +70,8 @@ class Hrac {
         System.out.println();
     }
 
-    void zahodPredmet(String paNazovPredmetu) {
-        Predmet predmet = aInventar.remove(paNazovPredmetu);
+    public void zahodPredmet(String paNazovPredmetu) {
+        IVec predmet = aInventar.remove(paNazovPredmetu);
         if (predmet == null) {
             System.out.println("Takyto predmet som este nezdvihol!");
         } else {
@@ -75,22 +80,28 @@ class Hrac {
         }
     }
 
-    void preskumaj(String paNazovPredmetu) {
-        Predmet predmet = aInventar.get(paNazovPredmetu);
+    public void preskumaj(String paNazovPredmetu) {
+        IVec predmet = aInventar.get(paNazovPredmetu);
         
         if (predmet == null) {
             System.out.println("Taky predmet nemam!");
         } else {
-            System.out.println(predmet.dajPopis());
+            System.out.println(predmet.dajPopis(this));
         }
     }
 
-    Predmet dajPredmet(String paNazovPredmetu) {
+    public IVec dajPredmet(String paNazovPredmetu) {
         return aInventar.get(paNazovPredmetu);
     }
 
-    boolean pouziPredmet(String paNazovPredmetu, String paParameter) {
-        Predmet predmet = aInventar.get(paNazovPredmetu);
-        return predmet.pouzi(paParameter, this);
+    public boolean pouziPredmet(String paNazovPredmetu, String paParameter) {
+        IVec predmet = aInventar.get(paNazovPredmetu);
+        
+        if (predmet != null) {
+            return predmet.pouzi(paParameter, this);
+        } else {
+            System.out.println("Nenasiel sa predmet s danym nazvom");
+            return false;
+        }
     }
 }

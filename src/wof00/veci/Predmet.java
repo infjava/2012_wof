@@ -2,13 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package wof00;
+package wof00.veci;
+
+import hra.Hrac;
 
 /**
  *
  * @author janik
  */
-public class Predmet {
+public class Predmet implements IVec {
+
     private final String aNazov;
     private final String aPopis;
 
@@ -21,11 +24,11 @@ public class Predmet {
         return aNazov;
     }
 
-    public String dajPopis() {
+    public String dajPopis(Hrac paHrac) {
         return aPopis;
     }
 
-    boolean pouzi(String paParameter, Hrac paHrac) {
+    public boolean pouzi(String paParameter, Hrac paHrac) {
         System.out.println("Tak to teda nie! " + aNazov + " sa neda pouzit!");
         return false;
     }

@@ -1,4 +1,8 @@
-package wof00;
+package hra;
+
+import wof00.prostredie.Mapa;
+import wof00.prikazy.Prikaz;
+import wof00.prikazy.Parser;
 
 /**
  * Trieda Hra je hlavna trieda aplikacie "World of FRI". "World of FRI" je velmi

@@ -1,4 +1,4 @@
-package wof00;
+package wof00.prikazy;
 
 import java.util.Scanner;
 
@@ -43,9 +43,9 @@ public class Parser
         // najde prve dve slova v riadku 
         Scanner tokenizer = new Scanner(vstupnyRiadok);
         if(tokenizer.hasNext()) {
-            prikaz = tokenizer.next().toLowerCase();      // prve slovo
+            prikaz = tokenizer.next();      // prve slovo
             if(tokenizer.hasNext()) {
-                parameter = tokenizer.nextLine().trim().toLowerCase();      // druhe slovo
+                parameter = tokenizer.nextLine().trim();      // druhe slovo
                 // vsimnite si, ze zbytok textu sa ignoruje
             }
         }

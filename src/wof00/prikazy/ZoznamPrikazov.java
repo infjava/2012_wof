@@ -1,4 +1,4 @@
-package wof00;
+package wof00.prikazy;
 
 import java.util.HashMap;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @version 2012.02.21
  */
 
-public class ZoznamPrikazov
+class ZoznamPrikazov
 {
     private static ZoznamPrikazov aInstancia = new ZoznamPrikazov();
     

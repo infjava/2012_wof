@@ -1,4 +1,6 @@
-package wof00;
+package wof00.prikazy;
+
+import hra.Hrac;
 
 /**
  * Trieda prikaz implemntuje casti prikazu, ktore moze hrac zadat.
@@ -74,7 +76,7 @@ public class Prikaz
      * @param paPrikaz prikaz, ktory ma byt vykonany.
      * @return true ak prikaz ukonci hru, inak vrati false.
      */
-    boolean vykonajPrikaz(Hrac paHrac) {
+    public boolean vykonajPrikaz(Hrac paHrac) {
         boolean jeKoniec = false;
         if (this.jeNeznamy()) {
             System.out.println("Nerozumiem, co mas na mysli...");

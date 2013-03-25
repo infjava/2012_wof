@@ -2,7 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package wof00;
+package wof00.prostredie;
+
+import wof00.veci.ISIC;
+import wof00.veci.Kluc;
+import wof00.veci.Predmet;
 
 /**
  *
@@ -30,33 +34,25 @@ public class Mapa {
         Predmet brozurka = new Predmet("brozurka", "Tu si mozem pozriet, kde sa mozem zamestnat");
         
         terasa.nastavVychod(new Dvere(vratnica));
+        terasa.pridajPredmet(new ISIC());
         
         //vratnica.nastavVychod(terasa);
         vratnica.nastavVychod(new Dvere(ic));
         vratnica.nastavVychod(new Dvere(chodbaB));
         vratnica.nastavVychod(new Dvere(chodbaA));
         
-        ic.nastavVychod(new Dvere(vratnica));
         ic.pridajPredmet(brozurka);
         
-        chodbaB.nastavVychod(new Dvere(labakB2));
+        chodbaB.nastavVychod(new DvereISIC(labakB2));
         chodbaB.nastavVychod(new Dvere(wc));
-        chodbaB.nastavVychod(new Dvere(vratnica));
         
-        labakB2.nastavVychod(new Dvere(chodbaB));
+        DvereNaKluc dvereDoA7 = new DvereNaKluc(ucebnaA7);
+        chodbaA.nastavVychod(dvereDoA7);
+        chodbaA.nastavVychod(new DvereISIC(labakA13));
         
-        wc.nastavVychod(new Dvere(chodbaB));
+        vratnica.pridajPredmet(new Kluc(dvereDoA7));
         
-        chodbaA.nastavVychod(new Dvere(ucebnaA7));
-        chodbaA.nastavVychod(new Dvere(bufet));
-        chodbaA.nastavVychod(new Dvere(vratnica));
-        chodbaA.nastavVychod(new Dvere(labakA13));
-        
-        labakA13.nastavVychod(new Dvere(chodbaA));
-
-        ucebnaA7.nastavVychod(new Dvere(chodbaA));
-        
-        bufet.nastavVychod(new Dvere(chodbaA));
+        bufet.nastavVychod(new DvereISIC(chodbaA));
         
         aVstupnaMiestnost = terasa;
     }

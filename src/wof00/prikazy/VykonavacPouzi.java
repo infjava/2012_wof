@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package wof00;
+package wof00.prikazy;
+
+import hra.Hrac;
 
 /**
  *
@@ -13,11 +15,11 @@ public class VykonavacPouzi implements IVykonavac {
     @Override
     public boolean vykonaj(String paParameter, Hrac paHrac) {
         String[] parametre = paParameter.split("->", 2);
-        String nazovPredmetu = parametre[0];
+        String nazovPredmetu = parametre[0].trim();
         String parameter = null;
         
         if (parametre.length > 1) {
-            parameter = parametre[1];
+            parameter = parametre[1].trim();
         }
         
 //        Predmet predmet = paHrac.dajPredmet(nazovPredmetu);

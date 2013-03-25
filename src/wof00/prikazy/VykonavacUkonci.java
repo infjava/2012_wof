@@ -2,23 +2,27 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package wof00;
+package wof00.prikazy;
+
+import hra.Hrac;
 
 /**
  *
  * @author janik
  */
-public class VykonavacZober implements IVykonavac {
+class VykonavacUkonci implements IVykonavac {
+
+    public VykonavacUkonci() {
+    }
 
     @Override
     public boolean vykonaj(String paParameter, Hrac paHrac) {
         if (paParameter == null) {
-            System.out.println("Co chces zobrat?");
+            return true;
         } else {
-            paHrac.zober(paParameter);
+            System.out.println("Ukonci co?");
+            return false;
         }
-        
-        return false;
     }
     
 }

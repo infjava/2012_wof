@@ -1,7 +1,8 @@
-package wof00;
+package wof00.prostredie;
 
 import java.util.HashMap;
 import java.util.TreeMap;
+import wof00.veci.IVec;
 
 /**
  * Trieda Miestnost realizuje jednu miestnost/priestor v celom priestore hry.
@@ -17,11 +18,10 @@ import java.util.TreeMap;
  */
 public class Miestnost 
 {
-
     private String aPopisMiestnosti;
-    private HashMap<String, Dvere> aVychody;
+    private HashMap<String, IDvere> aVychody;
     private final String aNazov;
-    private TreeMap<String, Predmet> aPredmety;
+    private TreeMap<String, IVec> aPredmety;
     
 
     /**
@@ -34,8 +34,8 @@ public class Miestnost
     public Miestnost(String paNazov, String paPopis) {
         aNazov = paNazov;
         this.aPopisMiestnosti = paPopis;
-        aVychody = new HashMap<String, Dvere>();
-        aPredmety = new TreeMap<String, Predmet>();
+        aVychody = new HashMap<String, IDvere>();
+        aPredmety = new TreeMap<String, IVec>();
     }
 
     /**
@@ -45,8 +45,8 @@ public class Miestnost
      * @param paSmer Smer vychodu
      * @param paMiestnostVSmere Miestnost v danom smere
      */
-    public void nastavVychod(Dvere paDvereVSmere, boolean paNastavOpacny) {
-        aVychody.put(paDvereVSmere.dajNazov().toLowerCase(), paDvereVSmere);
+    public void nastavVychod(IDvere paDvereVSmere, boolean paNastavOpacny) {
+        aVychody.put(paDvereVSmere.dajNazov(), paDvereVSmere);
         if (paNastavOpacny) {
             paDvereVSmere
                     .dajMiestnost()
@@ -57,7 +57,7 @@ public class Miestnost
         }
     }
     
-    public void nastavVychod(Dvere paDvereVSmere)
+    public void nastavVychod(IDvere paDvereVSmere)
     {
         this.nastavVychod(paDvereVSmere, true);
     }
@@ -95,19 +95,19 @@ public class Miestnost
         }
     }
 
-    Miestnost dajMiestnostVSmere(String paSmer) {
+    public Miestnost dajMiestnostVSmere(String paSmer) {
         return aVychody.get(paSmer).dajMiestnost();
     }
 
-    void pridajPredmet(Predmet paPredmet) {
+    public void pridajPredmet(IVec paPredmet) {
         aPredmety.put(paPredmet.dajNazov(), paPredmet);
     }
 
-    Predmet zoberPredmet(String paNazovPredmetu) {
+    public IVec zoberPredmet(String paNazovPredmetu) {
         return aPredmety.remove(paNazovPredmetu);
     }
 
-    Dvere dajDvereVSmere(String paSmer) {
+    public IDvere dajDvereVSmere(String paSmer) {
         return aVychody.get(paSmer);
     }
 }
