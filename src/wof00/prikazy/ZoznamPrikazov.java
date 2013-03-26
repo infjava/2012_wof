@@ -37,6 +37,8 @@ class ZoznamPrikazov
         aVykonavace.put("inventar", new VykonavacInventar());
         aVykonavace.put("zahod", new VykonavacZahod());
         aVykonavace.put("pouzi", new VykonavacPouzi());
+        aVykonavace.put("oslov", new VykonavacOslov());
+        aVykonavace.put("odpoved", new VykonavacOdpoved());
     }
 
     /**

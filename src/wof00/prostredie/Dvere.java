@@ -4,7 +4,7 @@
  */
 package wof00.prostredie;
 
-import hra.Hrac;
+import wof00.hra.Hrac;
 
 /**
  *

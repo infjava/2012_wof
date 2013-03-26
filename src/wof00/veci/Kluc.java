@@ -4,7 +4,7 @@
  */
 package wof00.veci;
 
-import hra.Hrac;
+import wof00.hra.Hrac;
 import wof00.prostredie.IDvereNaKluc;
 import wof00.prostredie.IDvere;
 import wof00.prostredie.Miestnost;

@@ -1,7 +1,9 @@
 package wof00.prostredie;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeMap;
+import wof00.npc.NPC;
 import wof00.veci.IVec;
 
 /**
@@ -22,7 +24,7 @@ public class Miestnost
     private HashMap<String, IDvere> aVychody;
     private final String aNazov;
     private TreeMap<String, IVec> aPredmety;
-    
+    private HashMap<String, NPC> aNPCcka;
 
     /**
      * Vytvori miestnost popis ktorej je v parametrom.
@@ -36,6 +38,7 @@ public class Miestnost
         this.aPopisMiestnosti = paPopis;
         aVychody = new HashMap<String, IDvere>();
         aPredmety = new TreeMap<String, IVec>();
+        aNPCcka = new HashMap<String, NPC>();
     }
 
     /**
@@ -76,19 +79,18 @@ public class Miestnost
     public void infoOMiestnosti() {
         System.out.println("Teraz si v miestnosti " + this.dajNazov());
         System.out.println(this.dajPopis());
-        System.out.print("Vychody: ");
         
-        for (String smer : this.aVychody.keySet()) {
-            System.out.print(smer + ", ");
-        }
+        vypisZoznamKlucov("Vychody", aVychody);
+        vypisZoznamKlucov("Predmety", aPredmety);
+        vypisZoznamKlucov("NPC", aNPCcka);
+    }
+
+    private void vypisZoznamKlucov(String paUvod, Map<String, ?> paKontainer) {
+        if (!paKontainer.isEmpty()) {
+            System.out.print(paUvod + ": ");
         
-        System.out.println();
-        
-        if (!aPredmety.isEmpty()) {
-            System.out.print("Predmety: ");
-        
-            for (String predmet : this.aPredmety.keySet()) {
-                System.out.print(predmet + ", ");
+            for (String polozka : paKontainer.keySet()) {
+                System.out.print(polozka + ", ");
             }
             
             System.out.println();
@@ -109,5 +111,13 @@ public class Miestnost
 
     public IDvere dajDvereVSmere(String paSmer) {
         return aVychody.get(paSmer);
+    }
+
+    void pridajNPC(NPC paNPC) {
+        aNPCcka.put(paNPC.dajMeno(), paNPC);
+    }
+
+    public NPC dajNPC(String paMenoNPC) {
+        return aNPCcka.get(paMenoNPC);
     }
 }

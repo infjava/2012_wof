@@ -5,7 +5,7 @@
 package wof00.prostredie;
 
 import java.util.Timer;
-import hra.Hrac;
+import wof00.hra.Hrac;
 
 /**
  *

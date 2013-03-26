@@ -1,4 +1,4 @@
-package hra;
+package wof00.hra;
 
 import wof00.prostredie.Mapa;
 import wof00.prikazy.Prikaz;

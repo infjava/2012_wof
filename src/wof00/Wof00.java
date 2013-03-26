@@ -1,6 +1,6 @@
 package wof00;
 
-import hra.Hra;
+import wof00.hra.Hra;
 import java.util.Scanner;
 
 /**

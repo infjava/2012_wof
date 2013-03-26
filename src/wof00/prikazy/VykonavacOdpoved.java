@@ -10,15 +10,10 @@ import wof00.hra.Hrac;
  *
  * @author janik
  */
-public class VykonavacZober implements IVykonavac {
-
+class VykonavacOdpoved implements IVykonavac {
     @Override
     public boolean vykonaj(String paParameter, Hrac paHrac) {
-        if (paParameter == null) {
-            System.out.println("Co chces zobrat?");
-        } else {
-            paHrac.zober(paParameter);
-        }
+        paHrac.odpovedzNPC(Integer.parseInt(paParameter));
         
         return false;
     }

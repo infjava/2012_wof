@@ -1,6 +1,6 @@
 package wof00.prikazy;
 
-import hra.Hrac;
+import wof00.hra.Hrac;
 
 /**
  * Trieda prikaz implemntuje casti prikazu, ktore moze hrac zadat.

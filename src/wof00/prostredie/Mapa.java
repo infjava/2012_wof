@@ -4,6 +4,8 @@
  */
 package wof00.prostredie;
 
+import wof00.npc.CastRozhovoru;
+import wof00.npc.NPC;
 import wof00.veci.ISIC;
 import wof00.veci.Kluc;
 import wof00.veci.Predmet;
@@ -40,6 +42,18 @@ public class Mapa {
         vratnica.nastavVychod(new Dvere(ic));
         vratnica.nastavVychod(new Dvere(chodbaB));
         vratnica.nastavVychod(new Dvere(chodbaA));
+        
+        CastRozhovoru rozhovorSVratnickouKluc = new CastRozhovoru("Tu mas");
+        
+        CastRozhovoru rozhovorSVratnickou = new CastRozhovoru("Cau vratnicka\nVitam ta putnik\nCo chces?");
+        rozhovorSVratnickou.pridajOdpoved("kluc", rozhovorSVratnickouKluc);
+        rozhovorSVratnickou.pridajOdpoved("Vdaka nic!", null);
+        
+        rozhovorSVratnickouKluc.pridajOdpoved("vdaka", rozhovorSVratnickou);
+        
+        NPC vratnicka = new NPC("vratnicka", rozhovorSVratnickou);
+        
+        vratnica.pridajNPC(vratnicka);
         
         ic.pridajPredmet(brozurka);
         

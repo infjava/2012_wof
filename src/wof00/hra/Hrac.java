@@ -2,13 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package hra;
+package wof00.hra;
 
 import wof00.veci.IVec;
 import wof00.prostredie.IDvere;
 import wof00.prostredie.ChybaVchadzaniaDoMiestnosti;
 import wof00.prostredie.Miestnost;
 import java.util.TreeMap;
+import wof00.npc.CastRozhovoru;
+import wof00.npc.NPC;
 
 /**
  *
@@ -19,11 +21,13 @@ public class Hrac {
     private final String aMenoHraca;
     private Miestnost aAktualnaMiestnost;
     private TreeMap<String, IVec> aInventar;
+    private CastRozhovoru aAktualnyRozhovor;
 
     public Hrac(String paMenoHraca, Miestnost paVstupnaMiestnost) {
         this.aMenoHraca = paMenoHraca;
         this.aAktualnaMiestnost = paVstupnaMiestnost;
         aInventar = new TreeMap<String, IVec>();
+        aAktualnyRozhovor = null;
     }
 
     public String dajMenoHraca() {
@@ -82,7 +86,7 @@ public class Hrac {
 
     public void preskumaj(String paNazovPredmetu) {
         IVec predmet = aInventar.get(paNazovPredmetu);
-        
+
         if (predmet == null) {
             System.out.println("Taky predmet nemam!");
         } else {
@@ -96,12 +100,36 @@ public class Hrac {
 
     public boolean pouziPredmet(String paNazovPredmetu, String paParameter) {
         IVec predmet = aInventar.get(paNazovPredmetu);
-        
+
         if (predmet != null) {
             return predmet.pouzi(paParameter, this);
         } else {
             System.out.println("Nenasiel sa predmet s danym nazvom");
             return false;
+        }
+    }
+
+    public void oslovNPC(String paMenoNPC) {
+        if (aAktualnyRozhovor == null) {
+            NPC npc = aAktualnaMiestnost.dajNPC(paMenoNPC);
+
+            if (npc != null) {
+                aAktualnyRozhovor = npc.dajRozhovor();
+                System.out.println(aAktualnyRozhovor);
+            } else {
+                System.out.println("Take NPC nevidim!");
+            }
+        }
+    }
+
+    public void odpovedzNPC(int paMoznost) {
+        if (aAktualnyRozhovor != null) {
+            aAktualnyRozhovor = aAktualnyRozhovor.dajMoznost(paMoznost);
+            if (aAktualnyRozhovor != null) {
+                System.out.println(aAktualnyRozhovor);
+            } else {
+                aAktualnaMiestnost.infoOMiestnosti();
+            }
         }
     }
 }
