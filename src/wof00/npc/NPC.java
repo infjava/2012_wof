@@ -10,9 +10,9 @@ package wof00.npc;
  */
 public class NPC {
     private final String aMeno;
-    private final CastRozhovoru aRozhovor;
+    private final IStavRozhovoru aRozhovor;
 
-    public NPC(String paMeno, CastRozhovoru paRozhovor) {
+    public NPC(String paMeno, IStavRozhovoru paRozhovor) {
         this.aMeno = paMeno;
         this.aRozhovor = paRozhovor;
     }
@@ -21,7 +21,7 @@ public class NPC {
         return aMeno;
     }
 
-    public CastRozhovoru dajRozhovor() {
+    public IStavRozhovoru dajRozhovor() {
         return aRozhovor;
     }
 }

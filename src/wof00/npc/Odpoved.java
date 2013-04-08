@@ -10,9 +10,9 @@ package wof00.npc;
  */
 class Odpoved {
     private final String aOdpoved;
-    private final CastRozhovoru aCastRozhovoru;
+    private final IStavRozhovoru aCastRozhovoru;
 
-    Odpoved(String paOdpoved, CastRozhovoru paCastRozhovoru) {
+    Odpoved(String paOdpoved, IStavRozhovoru paCastRozhovoru) {
         this.aOdpoved = paOdpoved;
         this.aCastRozhovoru = paCastRozhovoru;
     }
@@ -22,7 +22,7 @@ class Odpoved {
         return aOdpoved;
     }
 
-    CastRozhovoru dajRozhovor() {
+    IStavRozhovoru dajRozhovor() {
         return aCastRozhovoru;
     }
 }

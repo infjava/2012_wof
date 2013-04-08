@@ -9,7 +9,7 @@ import wof00.prostredie.IDvere;
 import wof00.prostredie.ChybaVchadzaniaDoMiestnosti;
 import wof00.prostredie.Miestnost;
 import java.util.TreeMap;
-import wof00.npc.CastRozhovoru;
+import wof00.npc.IStavRozhovoru;
 import wof00.npc.NPC;
 
 /**
@@ -21,7 +21,7 @@ public class Hrac {
     private final String aMenoHraca;
     private Miestnost aAktualnaMiestnost;
     private TreeMap<String, IVec> aInventar;
-    private CastRozhovoru aAktualnyRozhovor;
+    private IStavRozhovoru aAktualnyRozhovor;
 
     public Hrac(String paMenoHraca, Miestnost paVstupnaMiestnost) {
         this.aMenoHraca = paMenoHraca;
@@ -115,7 +115,7 @@ public class Hrac {
 
             if (npc != null) {
                 aAktualnyRozhovor = npc.dajRozhovor();
-                System.out.println(aAktualnyRozhovor);
+                this.spracujStavRozhovoru();
             } else {
                 System.out.println("Take NPC nevidim!");
             }
@@ -123,13 +123,38 @@ public class Hrac {
     }
 
     public void odpovedzNPC(int paMoznost) {
-        if (aAktualnyRozhovor != null) {
-            aAktualnyRozhovor = aAktualnyRozhovor.dajMoznost(paMoznost);
+        if (aAktualnyRozhovor == null) {
+            return;
+        }
+        
+        aAktualnyRozhovor = aAktualnyRozhovor.dajMoznost(paMoznost);
+        this.spracujStavRozhovoru();
+    }
+
+    private void spracujStavRozhovoru() {
+        IStavRozhovoru dalsi;
+
+        while (true) {
             if (aAktualnyRozhovor != null) {
                 System.out.println(aAktualnyRozhovor);
             } else {
                 aAktualnaMiestnost.infoOMiestnosti();
+                break;
             }
+            
+            aAktualnyRozhovor.vykonajAkciu(this);
+            
+            dalsi = aAktualnyRozhovor.dajNasledujuciStav();
+            
+            if (dalsi == null) {
+                break;
+            }
+            
+            aAktualnyRozhovor = dalsi;
         }
+    }
+
+    public void zober(IVec paPredmet) {
+        aInventar.put(paPredmet.dajNazov(), paPredmet);
     }
 }

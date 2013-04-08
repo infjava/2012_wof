@@ -4,6 +4,8 @@
  */
 package wof00.prostredie;
 
+import wof00.npc.Meeting;
+import wof00.npc.OdovzdaniePredmetu;
 import wof00.npc.CastRozhovoru;
 import wof00.npc.NPC;
 import wof00.veci.ISIC;
@@ -43,18 +45,6 @@ public class Mapa {
         vratnica.nastavVychod(new Dvere(chodbaB));
         vratnica.nastavVychod(new Dvere(chodbaA));
         
-        CastRozhovoru rozhovorSVratnickouKluc = new CastRozhovoru("Tu mas");
-        
-        CastRozhovoru rozhovorSVratnickou = new CastRozhovoru("Cau vratnicka\nVitam ta putnik\nCo chces?");
-        rozhovorSVratnickou.pridajOdpoved("kluc", rozhovorSVratnickouKluc);
-        rozhovorSVratnickou.pridajOdpoved("Vdaka nic!", null);
-        
-        rozhovorSVratnickouKluc.pridajOdpoved("vdaka", rozhovorSVratnickou);
-        
-        NPC vratnicka = new NPC("vratnicka", rozhovorSVratnickou);
-        
-        vratnica.pridajNPC(vratnicka);
-        
         ic.pridajPredmet(brozurka);
         
         chodbaB.nastavVychod(new DvereISIC(labakB2));
@@ -64,9 +54,24 @@ public class Mapa {
         chodbaA.nastavVychod(dvereDoA7);
         chodbaA.nastavVychod(new DvereISIC(labakA13));
         
-        vratnica.pridajPredmet(new Kluc(dvereDoA7));
+        //vratnica.pridajPredmet(new Kluc(dvereDoA7));
         
         bufet.nastavVychod(new DvereISIC(chodbaA));
+        
+        //CastRozhovoru rozhovorSVratnickouKluc = new CastRozhovoru("Tu mas");
+        
+        CastRozhovoru rozhovorSVratnickou = new CastRozhovoru("Co chces?");
+        Meeting meetingSVratnickou = new Meeting("Cau vratnicka\nVitam ta putnik", rozhovorSVratnickou);
+        OdovzdaniePredmetu rozhovorSVratnickouKluc = new OdovzdaniePredmetu(
+                new Kluc(dvereDoA7), "tu mas!", rozhovorSVratnickou
+            );
+        
+        rozhovorSVratnickou.pridajOdpoved("kluc", rozhovorSVratnickouKluc);
+        rozhovorSVratnickou.pridajOdpoved("Vdaka nic!", null);
+        
+        NPC vratnicka = new NPC("vratnicka", meetingSVratnickou);
+        
+        vratnica.pridajNPC(vratnicka);
         
         aVstupnaMiestnost = terasa;
     }
