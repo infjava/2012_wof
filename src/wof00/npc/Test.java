@@ -10,28 +10,28 @@ import wof00.hra.Hrac;
  *
  * @author janik
  */
-public class Meeting implements IStavRozhovoru {
-    private final String aOslovenie;
-    private final CastRozhovoru aPokracovanie;
-    
-    public Meeting(String paOslovenie, CastRozhovoru paPokracovanie) {
-        this.aOslovenie = paOslovenie;
-        this.aPokracovanie = paPokracovanie;
+public class Test implements IStavRozhovoru {
+    private final TestovaOtazka aPrvaOtazka;
+    private final String aUvod;
+
+    public Test(String paUvod, TestovaOtazka paPrvaOtazka) {
+        this.aPrvaOtazka = paPrvaOtazka;
+        this.aUvod = paUvod;
     }
 
     @Override
     public String toString() {
-        return aOslovenie;
+        return aUvod;
     }
-
+    
     @Override
     public IStavRozhovoru dajMoznost(int paMoznost) {
-        return aPokracovanie;
+        return new TestovaOtazka(aPrvaOtazka, 0);
     }
 
     @Override
     public IStavRozhovoru dajNasledujuciStav() {
-        return aPokracovanie;
+        return new TestovaOtazka(aPrvaOtazka, 0);
     }
 
     @Override

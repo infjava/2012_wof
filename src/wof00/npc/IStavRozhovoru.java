@@ -18,4 +18,5 @@ public interface IStavRozhovoru {
 
     public void vykonajAkciu(Hrac paHrac);
     
+    public boolean jeKoncovy();
 }

@@ -49,5 +49,9 @@ public class OdovzdaniePredmetu implements IStavRozhovoru {
         }
         aPredmet = null;
     }
-    
+
+    @Override
+    public boolean jeKoncovy() {
+        return false;
+    }
 }

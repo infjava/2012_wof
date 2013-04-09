@@ -8,6 +8,8 @@ import wof00.npc.Meeting;
 import wof00.npc.OdovzdaniePredmetu;
 import wof00.npc.CastRozhovoru;
 import wof00.npc.NPC;
+import wof00.npc.Test;
+import wof00.npc.TestovaOtazka;
 import wof00.veci.ISIC;
 import wof00.veci.Kluc;
 import wof00.veci.Predmet;
@@ -72,6 +74,46 @@ public class Mapa {
         NPC vratnicka = new NPC("vratnicka", meetingSVratnickou);
         
         vratnica.pridajNPC(vratnicka);
+        
+        terasa.pridajNPC(
+            new NPC(
+                "ucitel",
+                new Test(
+                    "Odpovedaj:",
+                    new TestovaOtazka(
+                        "Ako sa mas?",
+                        new String[]{
+                            "dobre",
+                            "zle",
+                            "neviem",
+                            "co? ako?"
+                        },
+                        1,
+                        new TestovaOtazka(
+                            "Kolko je 1+2",
+                            new String[]{
+                                "1",
+                                "2",
+                                "3",
+                                "to je co?"
+                            },
+                            3,
+                            new TestovaOtazka(
+                                "Co je to polymorfizmus?",
+                                new String[]{
+                                    "schopnost programu nadobudat rozne tvary",
+                                    "na jednu spravu reaguje objekt roznymi sposobmi",
+                                    "nic zaujimave",
+                                    "konstrukcia interface"
+                                },
+                                2,
+                                null
+                            )
+                        )
+                    )
+                )
+            )
+        );
         
         aVstupnaMiestnost = terasa;
     }

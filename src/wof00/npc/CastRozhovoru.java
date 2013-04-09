@@ -53,4 +53,9 @@ public class CastRozhovoru implements IStavRozhovoru {
     public void vykonajAkciu(Hrac paHrac) {
         
     }
+
+    @Override
+    public boolean jeKoncovy() {
+        return false;
+    }
 }

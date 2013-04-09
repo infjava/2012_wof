@@ -10,28 +10,28 @@ import wof00.hra.Hrac;
  *
  * @author janik
  */
-public class Meeting implements IStavRozhovoru {
-    private final String aOslovenie;
-    private final CastRozhovoru aPokracovanie;
-    
-    public Meeting(String paOslovenie, CastRozhovoru paPokracovanie) {
-        this.aOslovenie = paOslovenie;
-        this.aPokracovanie = paPokracovanie;
+class KoniecTestu implements IStavRozhovoru {
+    private final int aBody;
+    private final IStavRozhovoru aDalsia;
+
+    public KoniecTestu(int paBody, IStavRozhovoru paDalsia) {
+        this.aBody = paBody;
+        this.aDalsia = paDalsia;
     }
 
     @Override
     public String toString() {
-        return aOslovenie;
+        return "Koniec testu. Pocet bodov: " + aBody;
     }
 
     @Override
     public IStavRozhovoru dajMoznost(int paMoznost) {
-        return aPokracovanie;
+        return aDalsia;
     }
 
     @Override
     public IStavRozhovoru dajNasledujuciStav() {
-        return aPokracovanie;
+        return aDalsia;
     }
 
     @Override
@@ -41,6 +41,6 @@ public class Meeting implements IStavRozhovoru {
 
     @Override
     public boolean jeKoncovy() {
-        return false;
+        return true;
     }
 }

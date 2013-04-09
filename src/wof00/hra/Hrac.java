@@ -138,7 +138,6 @@ public class Hrac {
             if (aAktualnyRozhovor != null) {
                 System.out.println(aAktualnyRozhovor);
             } else {
-                aAktualnaMiestnost.infoOMiestnosti();
                 break;
             }
             
@@ -151,6 +150,14 @@ public class Hrac {
             }
             
             aAktualnyRozhovor = dalsi;
+        }
+        
+        if (aAktualnyRozhovor != null && aAktualnyRozhovor.jeKoncovy()) {
+            aAktualnyRozhovor = null;
+        }
+        
+        if (aAktualnyRozhovor == null) {
+            aAktualnaMiestnost.infoOMiestnosti();
         }
     }
 
