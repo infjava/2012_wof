@@ -4,6 +4,7 @@
  */
 package wof00.hra;
 
+import java.util.ArrayList;
 import wof00.veci.IVec;
 import wof00.prostredie.IDvere;
 import wof00.prostredie.ChybaVchadzaniaDoMiestnosti;
@@ -11,6 +12,7 @@ import wof00.prostredie.Miestnost;
 import java.util.TreeMap;
 import wof00.npc.IStavRozhovoru;
 import wof00.npc.NPC;
+import wof00.questy.IQuest;
 
 /**
  *
@@ -22,12 +24,14 @@ public class Hrac {
     private Miestnost aAktualnaMiestnost;
     private TreeMap<String, IVec> aInventar;
     private IStavRozhovoru aAktualnyRozhovor;
+    private ArrayList<IQuest> aQuesty;
 
     public Hrac(String paMenoHraca, Miestnost paVstupnaMiestnost) {
         this.aMenoHraca = paMenoHraca;
         this.aAktualnaMiestnost = paVstupnaMiestnost;
         aInventar = new TreeMap<String, IVec>();
         aAktualnyRozhovor = null;
+        aQuesty = new ArrayList<IQuest>();
     }
 
     public String dajMenoHraca() {
@@ -52,6 +56,10 @@ public class Hrac {
 
         aAktualnaMiestnost = dvereVSmere.dajMiestnost();
         dvereVSmere.presielCezVas(this);
+        
+        for (IQuest quest : aQuesty) {
+            quest.hracVosielDoMiestnosti(aAktualnaMiestnost);
+        }
 
         return ChybaVchadzaniaDoMiestnosti.ziadna;
     }
@@ -61,8 +69,8 @@ public class Hrac {
         if (predmet == null) {
             System.out.println("Predmet som proste nenasiel! Pozeraj lepsie!");
         } else {
-            aInventar.put(predmet.dajNazov(), predmet);
             System.out.println("Predmet bol pridany do inventara");
+            this.zober(predmet);
         }
     }
 
@@ -81,6 +89,9 @@ public class Hrac {
         } else {
             aAktualnaMiestnost.pridajPredmet(predmet);
             System.out.println("A predmet je uz v miestnosti");
+            for (IQuest quest : aQuesty) {
+                quest.hracZahodilPredmet(predmet);
+            }
         }
     }
 
@@ -163,5 +174,25 @@ public class Hrac {
 
     public void zober(IVec paPredmet) {
         aInventar.put(paPredmet.dajNazov(), paPredmet);
+        
+        for (IQuest quest : aQuesty) {
+            quest.hracZobralPredmet(paPredmet);
+        }
+    }
+
+    public void zadajQuest(IQuest paQuest) {
+        aQuesty.add(paQuest);
+        paQuest.aktivujSa(this);
+    }
+
+    public void vypisQuesty() {
+        System.out.println("Questy:");
+        for (IQuest quest : aQuesty) {
+            System.out.println("- " + quest + " - " + quest.dajStav());
+        }
+    }
+
+    public void vymazPredmet(String paNazovPredmetu) {
+        aInventar.remove(paNazovPredmetu);
     }
 }

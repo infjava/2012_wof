@@ -10,14 +10,15 @@ import wof00.hra.Hrac;
  *
  * @author janik
  */
-class VykonavacInventar implements IVykonavac {
+class VykonavacInfo implements IVykonavac {
 
-    public VykonavacInventar() {
+    public VykonavacInfo() {
     }
 
     @Override
     public boolean vykonaj(String paParameter, Hrac paHrac) {
         paHrac.vypisInventar();
+        paHrac.vypisQuesty();
         
         return false;
     }

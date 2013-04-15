@@ -4,9 +4,12 @@
  */
 package wof00.prostredie;
 
+import wof00.npc.ZadanieQuestu;
+import wof00.questy.KradnutiePocitacov;
 import wof00.npc.Meeting;
 import wof00.npc.OdovzdaniePredmetu;
 import wof00.npc.CastRozhovoru;
+import wof00.npc.IStavRozhovoru;
 import wof00.npc.NPC;
 import wof00.npc.Test;
 import wof00.npc.TestovaOtazka;
@@ -67,9 +70,16 @@ public class Mapa {
         OdovzdaniePredmetu rozhovorSVratnickouKluc = new OdovzdaniePredmetu(
                 new Kluc(dvereDoA7), "tu mas!", rozhovorSVratnickou
             );
+        IStavRozhovoru rozhovorSVratnickouUloha = new ZadanieQuestu(
+                new KradnutiePocitacov(), "tu mas!", rozhovorSVratnickou
+            );
         
         rozhovorSVratnickou.pridajOdpoved("kluc", rozhovorSVratnickouKluc);
+        rozhovorSVratnickou.pridajOdpoved("ulohu", rozhovorSVratnickouUloha);
         rozhovorSVratnickou.pridajOdpoved("Vdaka nic!", null);
+        
+        labakA13.pridajPredmet(new Predmet("pcA13", "Pocitac z labaku A13"));
+        labakB2.pridajPredmet(new Predmet("pcB2", "Pocitac z labaku B2"));
         
         NPC vratnicka = new NPC("vratnicka", meetingSVratnickou);
         

@@ -120,4 +120,8 @@ public class Miestnost
     public NPC dajNPC(String paMenoNPC) {
         return aNPCcka.get(paMenoNPC);
     }
+
+    public IVec dajPredmet(String paNazovPredmetu) {
+        return aPredmety.get(paNazovPredmetu);
+    }
 }

@@ -4,6 +4,7 @@
  */
 package wof00.prikazy;
 
+import java.util.Scanner;
 import wof00.hra.Hrac;
 
 /**
@@ -13,7 +14,8 @@ import wof00.hra.Hrac;
 class VykonavacOdpoved implements IVykonavac {
     @Override
     public boolean vykonaj(String paParameter, Hrac paHrac) {
-        paHrac.odpovedzNPC(Integer.parseInt(paParameter));
+        Scanner s = new Scanner(paParameter);
+        paHrac.odpovedzNPC(s.nextInt());
         
         return false;
     }

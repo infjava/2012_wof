@@ -34,7 +34,7 @@ class ZoznamPrikazov
         aVykonavace.put("chod", new VykonavacChod());
         aVykonavace.put("zober", new VykonavacZober());
         aVykonavace.put("ukaz", new VykonavacUkaz());
-        aVykonavace.put("inventar", new VykonavacInventar());
+        aVykonavace.put("info", new VykonavacInfo());
         aVykonavace.put("zahod", new VykonavacZahod());
         aVykonavace.put("pouzi", new VykonavacPouzi());
         aVykonavace.put("oslov", new VykonavacOslov());
