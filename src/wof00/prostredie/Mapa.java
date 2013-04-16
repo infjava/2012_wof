@@ -13,6 +13,7 @@ import wof00.npc.IStavRozhovoru;
 import wof00.npc.NPC;
 import wof00.npc.Test;
 import wof00.npc.TestovaOtazka;
+import wof00.questy.ZiskanieKluca;
 import wof00.veci.ISIC;
 import wof00.veci.Kluc;
 import wof00.veci.Predmet;
@@ -85,10 +86,7 @@ public class Mapa {
         
         vratnica.pridajNPC(vratnicka);
         
-        terasa.pridajNPC(
-            new NPC(
-                "ucitel",
-                new Test(
+        IStavRozhovoru ucitelTest = new Test(
                     "Odpovedaj:",
                     new TestovaOtazka(
                         "Ako sa mas?",
@@ -121,7 +119,12 @@ public class Mapa {
                             )
                         )
                     )
-                )
+                );
+        
+        terasa.pridajNPC(
+            new NPC(
+                "ucitel",
+                new ZadanieQuestu(new ZiskanieKluca(), "tu mas", ucitelTest)
             )
         );
         

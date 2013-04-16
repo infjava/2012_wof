@@ -4,7 +4,6 @@
  */
 package wof00.questy;
 
-import wof00.hra.Hrac;
 import wof00.prostredie.Miestnost;
 import wof00.veci.IVec;
 
@@ -12,18 +11,14 @@ import wof00.veci.IVec;
  *
  * @author janik
  */
-public class KradnutiePocitacov implements IQuest {
+public class KradnutiePocitacov extends Quest {
     private final String[] aPocitace = new String[]
     { "pcB2", "pcA13" };
     
     private int aPocetUkradnutych;
-    private StavQuestu aStav;
-    private Hrac aHrac;
     
     public KradnutiePocitacov() {
         aPocetUkradnutych = 0;
-        aStav = StavQuestu.nezadany;
-        aHrac = null;
     }
 
     @Override
@@ -59,31 +54,20 @@ public class KradnutiePocitacov implements IQuest {
     }
 
     @Override
-    public StavQuestu dajStav() {
-        return aStav;
-    }
-
-    @Override
-    public void aktivujSa(Hrac paHrac) {
-        aStav = StavQuestu.zadany;
-        aHrac = paHrac;
-    }
-
-    @Override
     public void skontrolujRiesenie() {
         if (aPocetUkradnutych == 2) {
-            aStav = StavQuestu.splneny;
+            this.nastavStav(StavQuestu.splneny);
             
             for (String pc : aPocitace) {
-                aHrac.vymazPredmet(pc);
+                this.dajHraca().vymazPredmet(pc);
             }
         }
     }
 
     @Override
     public void ukonci() {
-        if (aStav == StavQuestu.splneny) {
-            aStav = StavQuestu.ukonceny;
+        if (this.dajStav() == StavQuestu.splneny) {
+            this.nastavStav(StavQuestu.ukonceny);
         }
     }
 }

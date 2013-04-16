@@ -5,7 +5,7 @@
 package wof00.npc;
 
 import wof00.hra.Hrac;
-import wof00.questy.IQuest;
+import wof00.questy.Quest;
 import wof00.questy.StavQuestu;
 
 /**
@@ -13,11 +13,11 @@ import wof00.questy.StavQuestu;
  * @author janik
  */
 public class ZadanieQuestu implements IStavRozhovoru {
-    private final IQuest aQuest;
+    private final Quest aQuest;
     private final String aText;
-    private final CastRozhovoru aDalsia;
+    private final IStavRozhovoru aDalsia;
 
-    public ZadanieQuestu(IQuest paQuest, String paText, CastRozhovoru paDalsia) {
+    public ZadanieQuestu(Quest paQuest, String paText, IStavRozhovoru paDalsia) {
         this.aQuest = paQuest;
         this.aText = paText;
         this.aDalsia = paDalsia;
