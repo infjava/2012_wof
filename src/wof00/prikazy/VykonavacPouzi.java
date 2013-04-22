@@ -13,7 +13,7 @@ import wof00.hra.Hrac;
 public class VykonavacPouzi implements IVykonavac {
 
     @Override
-    public boolean vykonaj(String paParameter, Hrac paHrac) {
+    public void vykonaj(String paParameter, Hrac paHrac) {
         String[] parametre = paParameter.split("->", 2);
         String nazovPredmetu = parametre[0].trim();
         String parameter = null;
@@ -26,7 +26,7 @@ public class VykonavacPouzi implements IVykonavac {
 //        
 //        return predmet.pouzi(parameter, paHrac);
         
-        return paHrac.pouziPredmet(nazovPredmetu, parameter);
+        paHrac.pouziPredmet(nazovPredmetu, parameter);
     }
     
 }

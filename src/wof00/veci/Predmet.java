@@ -28,8 +28,7 @@ public class Predmet implements IVec {
         return aPopis;
     }
 
-    public boolean pouzi(String paParameter, Hrac paHrac) {
+    public void pouzi(String paParameter, Hrac paHrac) {
         System.out.println("Tak to teda nie! " + aNazov + " sa neda pouzit!");
-        return false;
     }
 }

@@ -13,5 +13,5 @@ import wof00.hra.Hrac;
 public interface IVec {
     public String dajNazov();
     public String dajPopis(Hrac paHrac);
-    public boolean pouzi(String paParameter, Hrac paHrac);
+    public void pouzi(String paParameter, Hrac paHrac);
 }

@@ -16,11 +16,9 @@ class VykonavacInfo implements IVykonavac {
     }
 
     @Override
-    public boolean vykonaj(String paParameter, Hrac paHrac) {
+    public void vykonaj(String paParameter, Hrac paHrac) {
         paHrac.vypisInventar();
         paHrac.vypisQuesty();
-        
-        return false;
     }
     
 }

@@ -10,6 +10,7 @@ import wof00.prostredie.IDvere;
 import wof00.prostredie.ChybaVchadzaniaDoMiestnosti;
 import wof00.prostredie.Miestnost;
 import java.util.TreeMap;
+import java.util.concurrent.BrokenBarrierException;
 import wof00.npc.IStavRozhovoru;
 import wof00.npc.NPC;
 import wof00.questy.Quest;
@@ -109,18 +110,17 @@ public class Hrac {
         return aInventar.get(paNazovPredmetu);
     }
 
-    public boolean pouziPredmet(String paNazovPredmetu, String paParameter) {
+    public void pouziPredmet(String paNazovPredmetu, String paParameter) {
         IVec predmet = aInventar.get(paNazovPredmetu);
 
         if (predmet != null) {
-            return predmet.pouzi(paParameter, this);
+            predmet.pouzi(paParameter, this);
         } else {
             System.out.println("Nenasiel sa predmet s danym nazvom");
-            return false;
         }
     }
 
-    public void oslovNPC(String paMenoNPC) {
+    public void oslovNPC(String paMenoNPC) throws BrokenBarrierException {
         if (aAktualnyRozhovor == null) {
             NPC npc = aAktualnaMiestnost.dajNPC(paMenoNPC);
 
@@ -133,7 +133,7 @@ public class Hrac {
         }
     }
 
-    public void odpovedzNPC(int paMoznost) {
+    public void odpovedzNPC(int paMoznost) throws BrokenBarrierException {
         if (aAktualnyRozhovor == null) {
             return;
         }
@@ -142,7 +142,7 @@ public class Hrac {
         this.spracujStavRozhovoru();
     }
 
-    private void spracujStavRozhovoru() {
+    private void spracujStavRozhovoru() throws BrokenBarrierException {
         IStavRozhovoru dalsi;
 
         while (true) {

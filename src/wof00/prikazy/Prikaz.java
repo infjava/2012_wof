@@ -1,5 +1,6 @@
 package wof00.prikazy;
 
+import java.util.concurrent.BrokenBarrierException;
 import wof00.hra.Hrac;
 
 /**
@@ -76,16 +77,16 @@ public class Prikaz
      * @param paPrikaz prikaz, ktory ma byt vykonany.
      * @return true ak prikaz ukonci hru, inak vrati false.
      */
-    public boolean vykonajPrikaz(Hrac paHrac) {
-        boolean jeKoniec = false;
+    public void vykonajPrikaz(Hrac paHrac) throws BrokenBarrierException {
         if (this.jeNeznamy()) {
             System.out.println("Nerozumiem, co mas na mysli...");
-            return false;
+            return;
         }
+        
         String nazovPrikazu = this.dajNazov();
         IVykonavac vykonavac = ZoznamPrikazov.dajInstanciu().dajVykonavac(nazovPrikazu);
         
         //return jeKoniec;
-        return vykonavac.vykonaj(this.dajParameter(), paHrac);
+        vykonavac.vykonaj(this.dajParameter(), paHrac);
     }
 }

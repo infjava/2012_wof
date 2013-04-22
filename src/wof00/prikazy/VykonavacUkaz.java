@@ -16,14 +16,12 @@ class VykonavacUkaz implements IVykonavac {
     }
 
     @Override
-    public boolean vykonaj(String paParameter, Hrac paHrac) {
+    public void vykonaj(String paParameter, Hrac paHrac) {
         if (paParameter == null) {
             paHrac.dajAktualnuMiestnost().infoOMiestnosti();
         } else {
             // Ak bol zadany parameter, kukame na predmet
             paHrac.preskumaj(paParameter);
         }
-        
-        return false;
     }
 }

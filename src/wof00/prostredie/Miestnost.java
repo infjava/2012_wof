@@ -80,11 +80,16 @@ public class Miestnost
         System.out.println("Teraz si v miestnosti " + this.dajNazov());
         System.out.println(this.dajPopis());
         
-        vypisZoznamKlucov("Vychody", aVychody);
+        infoOMiestnostiVychody();
         vypisZoznamKlucov("Predmety", aPredmety);
         vypisZoznamKlucov("NPC", aNPCcka);
     }
 
+    /**
+     * Pomocna metoda na vypis NPC, predmetov a vychodov
+     * @param paUvod
+     * @param paKontainer 
+     */
     private void vypisZoznamKlucov(String paUvod, Map<String, ?> paKontainer) {
         if (!paKontainer.isEmpty()) {
             System.out.print(paUvod + ": ");
@@ -95,10 +100,6 @@ public class Miestnost
             
             System.out.println();
         }
-    }
-
-    public Miestnost dajMiestnostVSmere(String paSmer) {
-        return aVychody.get(paSmer).dajMiestnost();
     }
 
     public void pridajPredmet(IVec paPredmet) {
@@ -123,5 +124,9 @@ public class Miestnost
 
     public IVec dajPredmet(String paNazovPredmetu) {
         return aPredmety.get(paNazovPredmetu);
+    }
+
+    protected void infoOMiestnostiVychody() {
+        vypisZoznamKlucov("Vychody", aVychody);
     }
 }

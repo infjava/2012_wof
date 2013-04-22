@@ -1,5 +1,6 @@
 package wof00.hra;
 
+import java.util.concurrent.BrokenBarrierException;
 import wof00.prostredie.Mapa;
 import wof00.prikazy.Prikaz;
 import wof00.prikazy.Parser;
@@ -50,7 +51,11 @@ public class Hra {
         boolean jeKoniec = false;
         while (!jeKoniec) {
             Prikaz prikaz = aParser.dajPrikaz();
-            jeKoniec = prikaz.vykonajPrikaz(aHrac);
+            try {
+                prikaz.vykonajPrikaz(aHrac);
+            } catch (BrokenBarrierException ex) {
+                jeKoniec = true;
+            }
         }
         System.out.println("Maj sa fajn!");
     }

@@ -13,6 +13,7 @@ import wof00.npc.IStavRozhovoru;
 import wof00.npc.NPC;
 import wof00.npc.Test;
 import wof00.npc.TestovaOtazka;
+import wof00.npc.UmrtieVRozhovore;
 import wof00.questy.ZiskanieKluca;
 import wof00.veci.ISIC;
 import wof00.veci.Kluc;
@@ -75,8 +76,11 @@ public class Mapa {
                 new KradnutiePocitacov(), "tu mas!", rozhovorSVratnickou
             );
         
+        IStavRozhovoru rozhovorSVratnickouSmrt = new UmrtieVRozhovore();
+        
         rozhovorSVratnickou.pridajOdpoved("kluc", rozhovorSVratnickouKluc);
         rozhovorSVratnickou.pridajOdpoved("ulohu", rozhovorSVratnickouUloha);
+        rozhovorSVratnickou.pridajOdpoved("umriet", rozhovorSVratnickouSmrt);
         rozhovorSVratnickou.pridajOdpoved("Vdaka nic!", null);
         
         labakA13.pridajPredmet(new Predmet("pcA13", "Pocitac z labaku A13"));

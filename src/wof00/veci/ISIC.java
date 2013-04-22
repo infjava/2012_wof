@@ -28,7 +28,7 @@ public class ISIC implements IVec {
     }
 
     @Override
-    public boolean pouzi(String paSmer, Hrac paHrac) {
+    public void pouzi(String paSmer, Hrac paHrac) {
         IDvere dvere = paHrac.dajAktualnuMiestnost().dajDvereVSmere(paSmer);
         if (dvere instanceof DvereISIC) {
             DvereISIC vychod = (DvereISIC) dvere;
@@ -37,7 +37,5 @@ public class ISIC implements IVec {
                 vychod.odomkniVychod();
             }
         }
-
-        return false;
     }
 }

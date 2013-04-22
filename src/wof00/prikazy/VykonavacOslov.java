@@ -4,6 +4,7 @@
  */
 package wof00.prikazy;
 
+import java.util.concurrent.BrokenBarrierException;
 import wof00.hra.Hrac;
 
 /**
@@ -12,9 +13,7 @@ import wof00.hra.Hrac;
  */
 class VykonavacOslov implements IVykonavac {
     @Override
-    public boolean vykonaj(String paParameter, Hrac paHrac) {
+    public void vykonaj(String paParameter, Hrac paHrac)  throws BrokenBarrierException {
         paHrac.oslovNPC(paParameter);
-        
-        return false;
     }
 }

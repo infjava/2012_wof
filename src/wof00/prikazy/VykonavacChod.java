@@ -16,10 +16,10 @@ class VykonavacChod implements IVykonavac {
     }
 
     @Override
-    public boolean vykonaj(String paParameter, Hrac paHrac) {
+    public void vykonaj(String paParameter, Hrac paHrac) {
         if (paParameter == null) {
             System.out.println("Chod kam?");
-            return false;
+            return;
         }
         
         switch (paHrac.chodDoMiestnosti(paParameter)) {
@@ -33,8 +33,6 @@ class VykonavacChod implements IVykonavac {
                 paHrac.dajAktualnuMiestnost().infoOMiestnosti();
                 break;
         }
-        
-        return false;
     }
     
 }

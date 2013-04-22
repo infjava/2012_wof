@@ -4,6 +4,7 @@
  */
 package wof00.npc;
 
+import java.util.concurrent.BrokenBarrierException;
 import wof00.hra.Hrac;
 
 /**
@@ -16,7 +17,7 @@ public interface IStavRozhovoru {
 
     public IStavRozhovoru dajNasledujuciStav();
 
-    public void vykonajAkciu(Hrac paHrac);
+    public void vykonajAkciu(Hrac paHrac) throws BrokenBarrierException;
     
     public boolean jeKoncovy();
 }

@@ -16,13 +16,11 @@ class VykonavacZahod implements IVykonavac {
     }
 
     @Override
-    public boolean vykonaj(String paParameter, Hrac paHrac) {
+    public void vykonaj(String paParameter, Hrac paHrac) {
         if (paParameter == null) {
             System.out.println("Co chces zahodit?");
         } else {
             paHrac.zahodPredmet(paParameter);
         }
-        
-        return false;
     }
 }

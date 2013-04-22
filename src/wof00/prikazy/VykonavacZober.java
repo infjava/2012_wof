@@ -13,14 +13,12 @@ import wof00.hra.Hrac;
 public class VykonavacZober implements IVykonavac {
 
     @Override
-    public boolean vykonaj(String paParameter, Hrac paHrac) {
+    public void vykonaj(String paParameter, Hrac paHrac) {
         if (paParameter == null) {
             System.out.println("Co chces zobrat?");
         } else {
             paHrac.zober(paParameter);
         }
-        
-        return false;
     }
     
 }

@@ -32,7 +32,7 @@ public class Kluc implements IVec {
     }
 
     @Override
-    public boolean pouzi(String paParameter, Hrac paHrac) {
+    public void pouzi(String paParameter, Hrac paHrac) {
         Miestnost miestnost = paHrac.dajAktualnuMiestnost();
         IDvere dvere = miestnost.dajDvereVSmere(aDvere.dajNazov());
 
@@ -41,13 +41,11 @@ public class Kluc implements IVec {
             dvere = miestnost.dajDvereVSmere(opacne.dajNazov());
             
             if (dvere != opacne) {
-                return false;
+                return;
             }
         }
         
         aDvere.odomkniZamkni();
-
-        return false;
     }
 
     public IDvereNaKluc dajDvere() {
