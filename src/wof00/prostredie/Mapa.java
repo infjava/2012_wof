@@ -41,6 +41,12 @@ public class Mapa {
         Miestnost labakA13 = new Miestnost("Laboratorium A13", "");
         Miestnost ucebnaA7 = new Miestnost("Ucebna A7", "");
         Miestnost bufet = new Miestnost("Bufet", "");
+        Vytah vytah = new Vytah("vytah", "vytah");
+        Miestnost chodbaASuteren = new Miestnost("Chodba A suteren", "Suteren");
+        Miestnost chodbaA1 = new Miestnost("Chodba A1", "Prve poschodie");
+        Miestnost chodbaA2 = new Miestnost("Chodba A2", "Druhe poschodie");
+        Miestnost chodbaA3 = new Miestnost("Chodba A3", "Tretie poschodie");
+        Miestnost schodisko = new Miestnost("schodisko", "Schodisko");
         
         Predmet brozurka = new Predmet("brozurka", "Tu si mozem pozriet, kde sa mozem zamestnat");
         
@@ -57,9 +63,27 @@ public class Mapa {
         chodbaB.nastavVychod(new DvereISIC(labakB2));
         chodbaB.nastavVychod(new Dvere(wc));
         
-        DvereNaKluc dvereDoA7 = new DvereNaKluc(ucebnaA7);
+        DvereZamykatelne dvereDoA7 = new DvereZamykatelne(ucebnaA7);
         chodbaA.nastavVychod(dvereDoA7);
         chodbaA.nastavVychod(new DvereISIC(labakA13));
+        
+/*        chodbaASuteren.nastavVychod(new DvereZamykatelne(vytah));
+        chodbaA.nastavVychod(new DvereZamykatelne(vytah));
+        chodbaA1.nastavVychod(new DvereZamykatelne(vytah));
+        chodbaA2.nastavVychod(new DvereZamykatelne(vytah));
+        chodbaA3.nastavVychod(new DvereZamykatelne(vytah));*/
+        
+        vytah.pridajPoschodie(chodbaASuteren);
+        vytah.pridajPoschodie(chodbaA);
+        vytah.pridajPoschodie(chodbaA1);
+        vytah.pridajPoschodie(chodbaA2);
+        vytah.pridajPoschodie(chodbaA3);
+        
+        chodbaASuteren.nastavVychod(new Dvere(schodisko));
+        chodbaA.nastavVychod(new Dvere(schodisko));
+        chodbaA1.nastavVychod(new Dvere(schodisko));
+        chodbaA2.nastavVychod(new Dvere(schodisko));
+        chodbaA3.nastavVychod(new Dvere(schodisko));
         
         //vratnica.pridajPredmet(new Kluc(dvereDoA7));
         

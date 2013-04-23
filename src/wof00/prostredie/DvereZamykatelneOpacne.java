@@ -10,11 +10,11 @@ import wof00.hra.Hrac;
  *
  * @author janik
  */
-class DvereNaKlucOpacne implements IDvereNaKluc {
-    private final DvereNaKluc aDvere;
+class DvereZamykatelneOpacne implements IDvereNaKluc {
+    private final DvereZamykatelne aDvere;
     private final Miestnost aMiestnost;
 
-    public DvereNaKlucOpacne(DvereNaKluc paDvere, Miestnost paMiestnost) {
+    public DvereZamykatelneOpacne(DvereZamykatelne paDvere, Miestnost paMiestnost) {
         this.aDvere = paDvere;
         this.aMiestnost = paMiestnost;
     }

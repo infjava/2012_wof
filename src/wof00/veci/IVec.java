@@ -4,14 +4,14 @@
  */
 package wof00.veci;
 
+import wof00.base.IPouzitelny;
 import wof00.hra.Hrac;
 
 /**
  *
  * @author janik
  */
-public interface IVec {
+public interface IVec extends IPouzitelny {
     public String dajNazov();
     public String dajPopis(Hrac paHrac);
-    public void pouzi(String paParameter, Hrac paHrac);
 }

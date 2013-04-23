@@ -11,6 +11,7 @@ import wof00.prostredie.ChybaVchadzaniaDoMiestnosti;
 import wof00.prostredie.Miestnost;
 import java.util.TreeMap;
 import java.util.concurrent.BrokenBarrierException;
+import wof00.base.IPouzitelny;
 import wof00.npc.IStavRozhovoru;
 import wof00.npc.NPC;
 import wof00.questy.Quest;
@@ -110,11 +111,14 @@ public class Hrac {
         return aInventar.get(paNazovPredmetu);
     }
 
-    public void pouziPredmet(String paNazovPredmetu, String paParameter) {
-        IVec predmet = aInventar.get(paNazovPredmetu);
+    public void pouzi(String paNazov, String paParameter) {
+        IVec predmet = aInventar.get(paNazov);
 
         if (predmet != null) {
             predmet.pouzi(paParameter, this);
+        } else if (aAktualnaMiestnost instanceof IPouzitelny
+                && paNazov.equals(aAktualnaMiestnost.dajNazov()) ) {
+            ((IPouzitelny)aAktualnaMiestnost).pouzi(paParameter, this);
         } else {
             System.out.println("Nenasiel sa predmet s danym nazvom");
         }

@@ -26,7 +26,7 @@ public class VykonavacPouzi implements IVykonavac {
 //        
 //        return predmet.pouzi(parameter, paHrac);
         
-        paHrac.pouziPredmet(nazovPredmetu, parameter);
+        paHrac.pouzi(nazovPredmetu, parameter);
     }
     
 }

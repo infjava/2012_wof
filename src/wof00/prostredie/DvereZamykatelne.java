@@ -10,12 +10,12 @@ import wof00.hra.Hrac;
  *
  * @author janik
  */
-class DvereNaKluc implements IDvereNaKluc {
+class DvereZamykatelne implements IDvereNaKluc {
     private final Miestnost aMiestnost;
-    private DvereNaKlucOpacne aOpacneDvere;
+    private DvereZamykatelneOpacne aOpacneDvere;
     private boolean aZamknute;
 
-    public DvereNaKluc(Miestnost paMiestnost) {
+    public DvereZamykatelne(Miestnost paMiestnost) {
         this.aMiestnost = paMiestnost;
         this.aOpacneDvere = null;
         this.aZamknute = true;
@@ -34,7 +34,7 @@ class DvereNaKluc implements IDvereNaKluc {
     @Override
     public IDvere vytvorPodobne(Miestnost paMiestnost) {
         if (aOpacneDvere == null) {
-            aOpacneDvere = new DvereNaKlucOpacne(this, paMiestnost);
+            aOpacneDvere = new DvereZamykatelneOpacne(this, paMiestnost);
         }
         return aOpacneDvere;
     }
