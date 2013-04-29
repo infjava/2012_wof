@@ -29,4 +29,8 @@ public class VykonavacPouzi implements IVykonavac {
         paHrac.pouzi(nazovPredmetu, parameter);
     }
     
+    @Override
+    public boolean maSaUkladat() {
+        return true;
+    }
 }

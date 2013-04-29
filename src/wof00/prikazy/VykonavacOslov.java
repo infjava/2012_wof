@@ -16,4 +16,9 @@ class VykonavacOslov implements IVykonavac {
     public void vykonaj(String paParameter, Hrac paHrac)  throws BrokenBarrierException {
         paHrac.oslovNPC(paParameter);
     }
+
+    @Override
+    public boolean maSaUkladat() {
+        return true;
+    }
 }

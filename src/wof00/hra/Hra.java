@@ -1,6 +1,9 @@
 package wof00.hra;
 
+import java.io.FileNotFoundException;
 import java.util.concurrent.BrokenBarrierException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import wof00.prostredie.Mapa;
 import wof00.prikazy.Prikaz;
 import wof00.prikazy.Parser;
@@ -25,17 +28,21 @@ import wof00.prikazy.Parser;
  */
 public class Hra {
 
-    private Parser aParser;
-    private final Mapa aMapa;
-    private final Hrac aHrac;
+    private final String aMenoHraca;
+    
+    private final Parser aParser;
+    private Mapa aMapa;
+    private Hrac aHrac;
 
     /**
      * Create the game and initialise its internal map.
      */
     public Hra(String paMenoHraca) {
-        aMapa = new Mapa();
+        aMenoHraca = paMenoHraca;
+        
         aParser = new Parser();
-        aHrac = new Hrac(paMenoHraca, aMapa.dajVstupnuMiestnost());
+        
+        this.inicializuj();
     }
 
     /**
@@ -51,10 +58,14 @@ public class Hra {
         boolean jeKoniec = false;
         while (!jeKoniec) {
             Prikaz prikaz = aParser.dajPrikaz();
-            try {
-                prikaz.vykonajPrikaz(aHrac);
-            } catch (BrokenBarrierException ex) {
-                jeKoniec = true;
+            if (prikaz == null) {
+                System.out.println("Nerozumiem, co mas na mysli...");
+            } else {
+                try {
+                    prikaz.vykonajPrikaz(aHrac);
+                } catch (BrokenBarrierException ex) {
+                    jeKoniec = true;
+                }
             }
         }
         System.out.println("Maj sa fajn!");
@@ -70,5 +81,46 @@ public class Hra {
         System.out.println("Zadaj 'pomoc' ak potrebujes pomoc.");
         System.out.println();
         aHrac.dajAktualnuMiestnost().infoOMiestnosti();
+    }
+    
+    public void uloz(String paNazovSuboru) {
+        try {
+            aParser.uloz(paNazovSuboru);
+            System.out.println("Ulozene...");
+        } catch (FileNotFoundException ex) {
+            System.out.println("Nepodarilo sa zapisat - neznama chyba");
+            ex.printStackTrace();
+        }
+    }
+    
+    public void nacitaj(String paNazovSuboru) {
+        Hrac staryHrac = aHrac;
+        Mapa staraMapa = aMapa;
+        
+        this.inicializuj();
+        try {
+            for (Prikaz prikaz : aParser.nacitaj(paNazovSuboru)) {
+                try {
+                    prikaz.vykonajPrikaz(aHrac);
+                } catch (Exception ex) {
+                    aHrac = staryHrac;
+                    aMapa = staraMapa;
+                    System.out.println("Nepodarilo sa nacitat subor - neznama chyba");
+                    ex.printStackTrace();
+                }
+            }
+        } catch (FileNotFoundException ex) {
+            aHrac = staryHrac;
+            aMapa = staraMapa;
+            System.out.println("Nepodarilo sa nacitat subor - neznama chyba");
+            ex.printStackTrace();
+        }
+        
+        System.out.println("Nacitane...");
+    }
+
+    private void inicializuj() {
+        aMapa = new Mapa();
+        aHrac = new Hrac(aMenoHraca, aMapa.dajVstupnuMiestnost(), this);
     }
 }

@@ -14,5 +14,7 @@ import wof00.hra.Hrac;
 interface IVykonavac {
 
     public void vykonaj(String paParameter, Hrac paHrac) throws BrokenBarrierException;
+
+    public boolean maSaUkladat();
     
 }

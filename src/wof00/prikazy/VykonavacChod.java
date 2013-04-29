@@ -34,5 +34,10 @@ class VykonavacChod implements IVykonavac {
                 break;
         }
     }
+
+    @Override
+    public boolean maSaUkladat() {
+        return true;
+    }
     
 }

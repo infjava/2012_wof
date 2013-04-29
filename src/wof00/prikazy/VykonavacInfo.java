@@ -20,5 +20,10 @@ class VykonavacInfo implements IVykonavac {
         paHrac.vypisInventar();
         paHrac.vypisQuesty();
     }
+
+    @Override
+    public boolean maSaUkladat() {
+        return false;
+    }
     
 }

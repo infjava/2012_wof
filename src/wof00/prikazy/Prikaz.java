@@ -1,5 +1,7 @@
 package wof00.prikazy;
 
+import java.io.PrintWriter;
+import java.util.Scanner;
 import java.util.concurrent.BrokenBarrierException;
 import wof00.hra.Hrac;
 
@@ -22,6 +24,34 @@ import wof00.hra.Hrac;
 
 public class Prikaz
 {
+
+    static Prikaz nacitajZo(Scanner in) {
+        String vstupnyRiadok = in.nextLine();
+
+        // najde prve dve slova v riadku 
+        Scanner tokenizer = new Scanner(vstupnyRiadok);
+        
+        if(! tokenizer.hasNext()) {
+            return null;
+        }
+        
+        String prikaz = tokenizer.next();      // prve slovo
+        String parameter;
+        if(tokenizer.hasNext()) {
+            parameter = tokenizer.nextLine().trim();      // druhe slovo
+        } else {
+            parameter = null;
+        }
+
+        // kontrola platnosti prikazu
+        if(ZoznamPrikazov.dajInstanciu().jePrikaz(prikaz)) {
+            // vytvori platny prikaz
+            return new Prikaz(prikaz, parameter);
+        }
+        
+        return null;
+    }
+    
     private String aNazovPrikazu;
     private String aParameter;
 
@@ -56,14 +86,6 @@ public class Prikaz
     }
 
     /**
-     * @return true, ak je prikaz neznamy.
-     */
-    public boolean jeNeznamy()
-    {
-        return (aNazovPrikazu == null);
-    }
-
-    /**
      * @return true, ak prikaz ma parameter.
      */
     public boolean maParameter()
@@ -78,15 +100,30 @@ public class Prikaz
      * @return true ak prikaz ukonci hru, inak vrati false.
      */
     public void vykonajPrikaz(Hrac paHrac) throws BrokenBarrierException {
-        if (this.jeNeznamy()) {
-            System.out.println("Nerozumiem, co mas na mysli...");
-            return;
-        }
-        
         String nazovPrikazu = this.dajNazov();
         IVykonavac vykonavac = ZoznamPrikazov.dajInstanciu().dajVykonavac(nazovPrikazu);
         
         //return jeKoniec;
         vykonavac.vykonaj(this.dajParameter(), paHrac);
+    }
+
+    public void zapisDo(PrintWriter out) {
+        out.println(this);
+    }
+
+    public boolean maSaUkladat() {
+        String nazovPrikazu = this.dajNazov();
+        IVykonavac vykonavac = ZoznamPrikazov.dajInstanciu().dajVykonavac(nazovPrikazu);
+        
+        return vykonavac.maSaUkladat();
+    }
+
+    @Override
+    public String toString() {
+        if (this.maParameter()) {
+            return aNazovPrikazu + " " + aParameter;
+        } else {
+            return aNazovPrikazu;
+        }
     }
 }

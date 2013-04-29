@@ -1,5 +1,9 @@
 package wof00.prikazy;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -17,6 +21,7 @@ public class Parser
 {
     private ZoznamPrikazov aPrikazy;  // odkaz na pripustne nazvy prikazov
     private Scanner aCitac;         // zdroj vstupov od hraca
+    private ArrayList<Prikaz> aZoznamVykonanychPrikazov;
 
     /**
      * Vytvori citac na citanie vstupov z terminaloveho okna.
@@ -25,6 +30,7 @@ public class Parser
     {
         aPrikazy = ZoznamPrikazov.dajInstanciu();
         aCitac = new Scanner(System.in);
+        aZoznamVykonanychPrikazov = new ArrayList<Prikaz>();
     }
 
     /**
@@ -32,31 +38,33 @@ public class Parser
      */
     public Prikaz dajPrikaz() 
     {
-        String vstupnyRiadok;   // riadok textu napisany hracom
-        String prikaz = null;
-        String parameter = null;
-
         System.out.print("> ");     // vyzva pre hraca na zadanie prikazu
+        Prikaz prikazInstance = Prikaz.nacitajZo(aCitac);
 
-        vstupnyRiadok = aCitac.nextLine();
+        if(prikazInstance != null) {
+            aZoznamVykonanychPrikazov.add(prikazInstance);
+        }
+        
+        return prikazInstance; 
+    }
+    
+    public void uloz(String paNazovSuboru) throws FileNotFoundException {
+        final File file = new File(paNazovSuboru + ".sav");
 
-        // najde prve dve slova v riadku 
-        Scanner tokenizer = new Scanner(vstupnyRiadok);
-        if(tokenizer.hasNext()) {
-            prikaz = tokenizer.next();      // prve slovo
-            if(tokenizer.hasNext()) {
-                parameter = tokenizer.nextLine().trim();      // druhe slovo
-                // vsimnite si, ze zbytok textu sa ignoruje
+        final PrintWriter out = new PrintWriter(file);
+
+        for (Prikaz prikaz : aZoznamVykonanychPrikazov) {
+            if (prikaz.maSaUkladat()) {
+                prikaz.zapisDo(out);
             }
         }
+        out.close();
+    }
 
-        // kontrola platnosti prikazu
-        if(aPrikazy.jePrikaz(prikaz)) {
-            // vytvori platny prikaz
-            return new Prikaz(prikaz, parameter);
-        } else {
-            // vytvori neplatny - "neznamy" prikaz
-            return new Prikaz(null, parameter); 
-        }
+    public Iterable<Prikaz> nacitaj(String paNazovSuboru) throws FileNotFoundException {
+        final File file = new File(paNazovSuboru + ".sav");
+        final Scanner in = new Scanner(file);
+        
+        return new SaveIterator(in);
     }
 }

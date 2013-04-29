@@ -27,13 +27,19 @@ public class Hrac {
     private TreeMap<String, IVec> aInventar;
     private IStavRozhovoru aAktualnyRozhovor;
     private ArrayList<Quest> aQuesty;
+    private final Hra aHra;
 
-    public Hrac(String paMenoHraca, Miestnost paVstupnaMiestnost) {
+    public Hrac(String paMenoHraca, Miestnost paVstupnaMiestnost, Hra paHra) {
         this.aMenoHraca = paMenoHraca;
         this.aAktualnaMiestnost = paVstupnaMiestnost;
         aInventar = new TreeMap<String, IVec>();
         aAktualnyRozhovor = null;
         aQuesty = new ArrayList<Quest>();
+        aHra = paHra;
+    }
+    
+    public Hra dajHru() {
+        return aHra;
     }
 
     public String dajMenoHraca() {

@@ -23,4 +23,9 @@ class VykonavacZahod implements IVykonavac {
             paHrac.zahodPredmet(paParameter);
         }
     }
+
+    @Override
+    public boolean maSaUkladat() {
+        return true;
+    }
 }

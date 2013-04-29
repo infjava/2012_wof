@@ -24,4 +24,9 @@ class VykonavacUkaz implements IVykonavac {
             paHrac.preskumaj(paParameter);
         }
     }
+
+    @Override
+    public boolean maSaUkladat() {
+        return false;
+    }
 }

@@ -4,7 +4,6 @@
  */
 package wof00.prikazy;
 
-import java.util.Scanner;
 import java.util.concurrent.BrokenBarrierException;
 import wof00.hra.Hrac;
 
@@ -12,16 +11,19 @@ import wof00.hra.Hrac;
  *
  * @author janik
  */
-class VykonavacOdpoved implements IVykonavac {
-    @Override
-    public void vykonaj(String paParameter, Hrac paHrac)  throws BrokenBarrierException {
-        Scanner s = new Scanner(paParameter);
-        paHrac.odpovedzNPC(s.nextInt());
+class VykonavacNacitaj implements IVykonavac {
+
+    public VykonavacNacitaj() {
     }
-    
+
+    @Override
+    public void vykonaj(String paParameter, Hrac paHrac) throws BrokenBarrierException {
+        paHrac.dajHru().nacitaj(paParameter);
+    }
 
     @Override
     public boolean maSaUkladat() {
-        return true;
+        return false;
     }
+    
 }

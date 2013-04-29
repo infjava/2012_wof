@@ -25,4 +25,8 @@ class VykonavacUkonci implements IVykonavac {
         }
     }
     
+    @Override
+    public boolean maSaUkladat() {
+        return false;
+    }
 }

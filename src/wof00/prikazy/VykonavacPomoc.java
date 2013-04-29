@@ -22,4 +22,8 @@ class VykonavacPomoc implements IVykonavac {
         System.out.println("   chod ukonci pomoc");
     }
     
+    @Override
+    public boolean maSaUkladat() {
+        return false;
+    }
 }

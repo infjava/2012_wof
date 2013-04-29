@@ -21,4 +21,8 @@ public class VykonavacZober implements IVykonavac {
         }
     }
     
+    @Override
+    public boolean maSaUkladat() {
+        return true;
+    }
 }
