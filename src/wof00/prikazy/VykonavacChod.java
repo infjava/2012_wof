@@ -5,6 +5,8 @@
 package wof00.prikazy;
 
 import wof00.hra.Hrac;
+import wof00.vynimky.ChodenieException;
+import wof00.vynimky.ChybaVykonaniaException;
 
 /**
  *
@@ -16,23 +18,21 @@ class VykonavacChod implements IVykonavac {
     }
 
     @Override
-    public void vykonaj(String paParameter, Hrac paHrac) {
+    public void vykonaj(String paParameter, Hrac paHrac)
+            throws ChybaVykonaniaException {
         if (paParameter == null) {
             System.out.println("Chod kam?");
-            return;
+            throw new ChybaVykonaniaException("Nespravny parameter");
         }
         
-        switch (paHrac.chodDoMiestnosti(paParameter)) {
-            case neexistujuciVychod:
-                System.out.println("Tam nie je vychod!");
-                break;
-            case zamknute:
-                System.out.println("Vychod je zamknuty!");
-                break;
-            case ziadna:
-                paHrac.dajAktualnuMiestnost().infoOMiestnosti();
-                break;
+        try {
+            paHrac.chodDoMiestnosti(paParameter);
+        } catch (ChodenieException ex) {
+            System.out.println(ex.getMessage());
+            throw new ChybaVykonaniaException("Nepodarilo sa vojst do miestnosti", ex);
         }
+        
+        paHrac.dajAktualnuMiestnost().infoOMiestnosti();
     }
 
     @Override

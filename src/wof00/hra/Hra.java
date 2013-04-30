@@ -1,9 +1,7 @@
 package wof00.hra;
 
 import java.io.FileNotFoundException;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import wof00.vynimky.UkonciHruException;
 import wof00.prostredie.Mapa;
 import wof00.prikazy.Prikaz;
 import wof00.prikazy.Parser;
@@ -63,7 +61,7 @@ public class Hra {
             } else {
                 try {
                     prikaz.vykonajPrikaz(aHrac);
-                } catch (BrokenBarrierException ex) {
+                } catch (UkonciHruException ex) {
                     jeKoniec = true;
                 }
             }

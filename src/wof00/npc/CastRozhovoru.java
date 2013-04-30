@@ -6,6 +6,7 @@ package wof00.npc;
 
 import java.util.ArrayList;
 import wof00.hra.Hrac;
+import wof00.vynimky.OdpovedMimoRozsahException;
 
 /**
  *
@@ -37,9 +38,11 @@ public class CastRozhovoru implements IStavRozhovoru {
         aOdpovede.add(new Odpoved(paOdpoved, paCastRozhovoru));
     }
 
-    public IStavRozhovoru dajMoznost(int paMoznost) {
+    @Override
+    public IStavRozhovoru dajMoznost(int paMoznost)
+            throws OdpovedMimoRozsahException {
         if (paMoznost < 1 || paMoznost > aOdpovede.size()) {
-            return this;
+            throw new OdpovedMimoRozsahException("Hodnota " + paMoznost + " je mimo rozsah");
         }
         return aOdpovede.get(paMoznost - 1).dajRozhovor();
     }

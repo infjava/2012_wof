@@ -7,14 +7,20 @@ package wof00.hra;
 import java.util.ArrayList;
 import wof00.veci.IVec;
 import wof00.prostredie.IDvere;
-import wof00.prostredie.ChybaVchadzaniaDoMiestnosti;
 import wof00.prostredie.Miestnost;
 import java.util.TreeMap;
-import java.util.concurrent.BrokenBarrierException;
+import wof00.vynimky.UkonciHruException;
 import wof00.base.IPouzitelny;
 import wof00.npc.IStavRozhovoru;
 import wof00.npc.NPC;
 import wof00.questy.Quest;
+import wof00.vynimky.NeznamaNPCException;
+import wof00.vynimky.OdpovedMimoRozsahException;
+import wof00.vynimky.PredmetNieJeVInventariException;
+import wof00.vynimky.PredmetNieJeVMiestnostiException;
+import wof00.vynimky.PredmetSaNedaPouzitException;
+import wof00.vynimky.ZamknuteDvereException;
+import wof00.vynimky.ZiadnyVychodException;
 
 /**
  *
@@ -53,13 +59,14 @@ public class Hrac {
     /**
      * @return True, ak sa podari prejst do miestnosti v danom smere
      */
-    public ChybaVchadzaniaDoMiestnosti chodDoMiestnosti(String paSmer) {
+    public void chodDoMiestnosti(String paSmer)
+            throws ZiadnyVychodException, ZamknuteDvereException {
         final IDvere dvereVSmere = aAktualnaMiestnost.dajDvereVSmere(paSmer);
 
         if (dvereVSmere == null) {
-            return ChybaVchadzaniaDoMiestnosti.neexistujuciVychod;
+            throw new ZiadnyVychodException("V smere " + paSmer + " vychod nie je");
         } else if (dvereVSmere.suZamknute()) {
-            return ChybaVchadzaniaDoMiestnosti.zamknute;
+            throw new ZamknuteDvereException("Dvere v smere " + paSmer + " su zamknute");
         }
 
         aAktualnaMiestnost = dvereVSmere.dajMiestnost();
@@ -68,14 +75,13 @@ public class Hrac {
         for (Quest quest : aQuesty) {
             quest.hracVosielDoMiestnosti(aAktualnaMiestnost);
         }
-
-        return ChybaVchadzaniaDoMiestnosti.ziadna;
     }
 
-    public void zober(String paNazovPredmetu) {
+    public void zober(String paNazovPredmetu)
+            throws PredmetNieJeVMiestnostiException {
         IVec predmet = aAktualnaMiestnost.zoberPredmet(paNazovPredmetu);
         if (predmet == null) {
-            System.out.println("Predmet som proste nenasiel! Pozeraj lepsie!");
+            throw new PredmetNieJeVMiestnostiException("Predmet " + paNazovPredmetu + " sa v miestnosti nenachadza");
         } else {
             System.out.println("Predmet bol pridany do inventara");
             this.zober(predmet);
@@ -90,10 +96,10 @@ public class Hrac {
         System.out.println();
     }
 
-    public void zahodPredmet(String paNazovPredmetu) {
+    public void zahodPredmet(String paNazovPredmetu) throws PredmetNieJeVInventariException {
         IVec predmet = aInventar.remove(paNazovPredmetu);
         if (predmet == null) {
-            System.out.println("Takyto predmet som este nezdvihol!");
+            throw new PredmetNieJeVInventariException("Predmet " + paNazovPredmetu + " nemas v inventari");
         } else {
             aAktualnaMiestnost.pridajPredmet(predmet);
             System.out.println("A predmet je uz v miestnosti");
@@ -103,11 +109,12 @@ public class Hrac {
         }
     }
 
-    public void preskumaj(String paNazovPredmetu) {
+    public void preskumaj(String paNazovPredmetu)
+            throws PredmetNieJeVInventariException {
         IVec predmet = aInventar.get(paNazovPredmetu);
 
         if (predmet == null) {
-            System.out.println("Taky predmet nemam!");
+            throw new PredmetNieJeVInventariException("Predmet " + paNazovPredmetu + " nemas v inventari");
         } else {
             System.out.println(predmet.dajPopis(this));
         }
@@ -117,7 +124,8 @@ public class Hrac {
         return aInventar.get(paNazovPredmetu);
     }
 
-    public void pouzi(String paNazov, String paParameter) {
+    public void pouzi(String paNazov, String paParameter)
+            throws PredmetNieJeVInventariException, PredmetSaNedaPouzitException {
         IVec predmet = aInventar.get(paNazov);
 
         if (predmet != null) {
@@ -126,11 +134,12 @@ public class Hrac {
                 && paNazov.equals(aAktualnaMiestnost.dajNazov()) ) {
             ((IPouzitelny)aAktualnaMiestnost).pouzi(paParameter, this);
         } else {
-            System.out.println("Nenasiel sa predmet s danym nazvom");
+            throw new PredmetNieJeVInventariException("Predmet " + paNazov + " nemas v inventari");
         }
     }
 
-    public void oslovNPC(String paMenoNPC) throws BrokenBarrierException {
+    public void oslovNPC(String paMenoNPC)
+            throws UkonciHruException, NeznamaNPCException {
         if (aAktualnyRozhovor == null) {
             NPC npc = aAktualnaMiestnost.dajNPC(paMenoNPC);
 
@@ -138,12 +147,13 @@ public class Hrac {
                 aAktualnyRozhovor = npc.dajRozhovor();
                 this.spracujStavRozhovoru();
             } else {
-                System.out.println("Take NPC nevidim!");
+                throw new NeznamaNPCException("Osobu " + paMenoNPC + " som nenasiel");
             }
         }
     }
 
-    public void odpovedzNPC(int paMoznost) throws BrokenBarrierException {
+    public void odpovedzNPC(int paMoznost)
+            throws UkonciHruException, OdpovedMimoRozsahException {
         if (aAktualnyRozhovor == null) {
             return;
         }
@@ -152,7 +162,7 @@ public class Hrac {
         this.spracujStavRozhovoru();
     }
 
-    private void spracujStavRozhovoru() throws BrokenBarrierException {
+    private void spracujStavRozhovoru() throws UkonciHruException {
         IStavRozhovoru dalsi;
 
         while (true) {

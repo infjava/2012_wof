@@ -4,8 +4,9 @@
  */
 package wof00.prikazy;
 
-import java.util.concurrent.BrokenBarrierException;
+import wof00.vynimky.UkonciHruException;
 import wof00.hra.Hrac;
+import wof00.vynimky.ChybaVykonaniaException;
 
 /**
  *
@@ -17,11 +18,13 @@ class VykonavacUkonci implements IVykonavac {
     }
 
     @Override
-    public void vykonaj(String paParameter, Hrac paHrac) throws BrokenBarrierException {
+    public void vykonaj(String paParameter, Hrac paHrac)
+            throws UkonciHruException, ChybaVykonaniaException {
         if (paParameter == null) {
-            throw new BrokenBarrierException();
+            throw new UkonciHruException("Ukoncil si hru prikazom ukonci");
         } else {
             System.out.println("Ukonci co?");
+            throw new ChybaVykonaniaException("Nespravny parameter");
         }
     }
     

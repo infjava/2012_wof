@@ -4,8 +4,9 @@
  */
 package wof00.npc;
 
-import java.util.concurrent.BrokenBarrierException;
+import wof00.vynimky.UkonciHruException;
 import wof00.hra.Hrac;
+import wof00.vynimky.OdpovedMimoRozsahException;
 
 /**
  *
@@ -13,11 +14,12 @@ import wof00.hra.Hrac;
  */
 public interface IStavRozhovoru {
 
-    public IStavRozhovoru dajMoznost(int paMoznost);
+    public IStavRozhovoru dajMoznost(int paMoznost)
+            throws OdpovedMimoRozsahException;
 
     public IStavRozhovoru dajNasledujuciStav();
 
-    public void vykonajAkciu(Hrac paHrac) throws BrokenBarrierException;
+    public void vykonajAkciu(Hrac paHrac) throws UkonciHruException;
     
     public boolean jeKoncovy();
 }

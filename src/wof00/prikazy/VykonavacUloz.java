@@ -4,7 +4,7 @@
  */
 package wof00.prikazy;
 
-import java.util.concurrent.BrokenBarrierException;
+import wof00.vynimky.UkonciHruException;
 import wof00.hra.Hrac;
 
 /**
@@ -13,7 +13,7 @@ import wof00.hra.Hrac;
  */
 class VykonavacUloz implements IVykonavac {
     @Override
-    public void vykonaj(String paParameter, Hrac paHrac) throws BrokenBarrierException {
+    public void vykonaj(String paParameter, Hrac paHrac) throws UkonciHruException {
         paHrac.dajHru().uloz(paParameter);
     }
 

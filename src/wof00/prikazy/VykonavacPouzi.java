@@ -5,6 +5,9 @@
 package wof00.prikazy;
 
 import wof00.hra.Hrac;
+import wof00.vynimky.ChybaVykonaniaException;
+import wof00.vynimky.PredmetNieJeVInventariException;
+import wof00.vynimky.PredmetSaNedaPouzitException;
 
 /**
  *
@@ -13,7 +16,8 @@ import wof00.hra.Hrac;
 public class VykonavacPouzi implements IVykonavac {
 
     @Override
-    public void vykonaj(String paParameter, Hrac paHrac) {
+    public void vykonaj(String paParameter, Hrac paHrac)
+            throws ChybaVykonaniaException {
         String[] parametre = paParameter.split("->", 2);
         String nazovPredmetu = parametre[0].trim();
         String parameter = null;
@@ -22,11 +26,15 @@ public class VykonavacPouzi implements IVykonavac {
             parameter = parametre[1].trim();
         }
         
-//        Predmet predmet = paHrac.dajPredmet(nazovPredmetu);
-//        
-//        return predmet.pouzi(parameter, paHrac);
-        
-        paHrac.pouzi(nazovPredmetu, parameter);
+        try {
+            paHrac.pouzi(nazovPredmetu, parameter);
+        } catch (PredmetNieJeVInventariException ex) {
+            System.out.println(ex.getMessage());
+            throw new ChybaVykonaniaException("Nepodarilo sa pouzit predmet", ex);
+        } catch (PredmetSaNedaPouzitException ex) {
+            System.out.println(ex.getMessage());
+            throw new ChybaVykonaniaException("Nepodarilo sa pouzit predmet", ex);
+        }
     }
     
     @Override

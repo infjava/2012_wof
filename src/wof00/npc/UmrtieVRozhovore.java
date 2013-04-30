@@ -4,7 +4,7 @@
  */
 package wof00.npc;
 
-import java.util.concurrent.BrokenBarrierException;
+import wof00.vynimky.UkonciHruException;
 import wof00.hra.Hrac;
 
 /**
@@ -29,8 +29,8 @@ public class UmrtieVRozhovore implements IStavRozhovoru {
     }
 
     @Override
-    public void vykonajAkciu(Hrac paHrac) throws BrokenBarrierException {
-        throw new BrokenBarrierException();
+    public void vykonajAkciu(Hrac paHrac) throws UkonciHruException {
+        throw new UkonciHruException("Zabilo ta nake NPC");
     }
 
     @Override

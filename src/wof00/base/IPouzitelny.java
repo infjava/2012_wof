@@ -5,11 +5,13 @@
 package wof00.base;
 
 import wof00.hra.Hrac;
+import wof00.vynimky.PredmetSaNedaPouzitException;
 
 /**
  *
  * @author janik
  */
 public interface IPouzitelny {
-    public void pouzi(String paParameter, Hrac paHrac);
+    public void pouzi(String paParameter, Hrac paHrac)
+            throws PredmetSaNedaPouzitException;
 }

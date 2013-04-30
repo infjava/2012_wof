@@ -2,8 +2,9 @@ package wof00.prikazy;
 
 import java.io.PrintWriter;
 import java.util.Scanner;
-import java.util.concurrent.BrokenBarrierException;
+import wof00.vynimky.UkonciHruException;
 import wof00.hra.Hrac;
+import wof00.vynimky.ChybaVykonaniaException;
 
 /**
  * Trieda prikaz implemntuje casti prikazu, ktore moze hrac zadat.
@@ -54,6 +55,7 @@ public class Prikaz
     
     private String aNazovPrikazu;
     private String aParameter;
+    private boolean aVykonany;
 
     /**
      * Inicializuje slova prikazu dvomi zadanymi parametrami. Jeden alebo oba
@@ -67,6 +69,7 @@ public class Prikaz
     {
         aNazovPrikazu = paNazovPrikazu;
         aParameter = paParameter;
+        aVykonany = false;
     }
 
     /**
@@ -99,12 +102,15 @@ public class Prikaz
      * @param paPrikaz prikaz, ktory ma byt vykonany.
      * @return true ak prikaz ukonci hru, inak vrati false.
      */
-    public void vykonajPrikaz(Hrac paHrac) throws BrokenBarrierException {
+    public void vykonajPrikaz(Hrac paHrac) throws UkonciHruException {
         String nazovPrikazu = this.dajNazov();
         IVykonavac vykonavac = ZoznamPrikazov.dajInstanciu().dajVykonavac(nazovPrikazu);
-        
-        //return jeKoniec;
-        vykonavac.vykonaj(this.dajParameter(), paHrac);
+        try {
+            vykonavac.vykonaj(this.dajParameter(), paHrac);
+            aVykonany = true;
+        } catch (ChybaVykonaniaException ex) {
+            aVykonany = false;
+        }
     }
 
     public void zapisDo(PrintWriter out) {
@@ -112,6 +118,9 @@ public class Prikaz
     }
 
     public boolean maSaUkladat() {
+        if (!aVykonany) {
+            return false;
+        }
         String nazovPrikazu = this.dajNazov();
         IVykonavac vykonavac = ZoznamPrikazov.dajInstanciu().dajVykonavac(nazovPrikazu);
         

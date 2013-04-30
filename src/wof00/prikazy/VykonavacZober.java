@@ -5,6 +5,8 @@
 package wof00.prikazy;
 
 import wof00.hra.Hrac;
+import wof00.vynimky.ChybaVykonaniaException;
+import wof00.vynimky.PredmetNieJeVMiestnostiException;
 
 /**
  *
@@ -13,11 +15,17 @@ import wof00.hra.Hrac;
 public class VykonavacZober implements IVykonavac {
 
     @Override
-    public void vykonaj(String paParameter, Hrac paHrac) {
+    public void vykonaj(String paParameter, Hrac paHrac)
+            throws ChybaVykonaniaException {
         if (paParameter == null) {
             System.out.println("Co chces zobrat?");
+            throw new ChybaVykonaniaException("Nespravny parameter");
         } else {
-            paHrac.zober(paParameter);
+            try {
+                paHrac.zober(paParameter);
+            } catch (PredmetNieJeVMiestnostiException ex) {
+                throw new ChybaVykonaniaException("Nepodarilo sa zobrat predmet", ex);
+            }
         }
     }
     

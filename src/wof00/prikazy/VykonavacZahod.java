@@ -5,6 +5,8 @@
 package wof00.prikazy;
 
 import wof00.hra.Hrac;
+import wof00.vynimky.ChybaVykonaniaException;
+import wof00.vynimky.PredmetNieJeVInventariException;
 
 /**
  *
@@ -16,11 +18,18 @@ class VykonavacZahod implements IVykonavac {
     }
 
     @Override
-    public void vykonaj(String paParameter, Hrac paHrac) {
+    public void vykonaj(String paParameter, Hrac paHrac)
+            throws ChybaVykonaniaException {
         if (paParameter == null) {
             System.out.println("Co chces zahodit?");
+            throw new ChybaVykonaniaException("Nespravny parameter");
         } else {
-            paHrac.zahodPredmet(paParameter);
+            try {
+                paHrac.zahodPredmet(paParameter);
+            } catch (PredmetNieJeVInventariException ex) {
+                System.out.println(ex.getMessage());
+                throw new ChybaVykonaniaException("Nepodarilo sa zahodit predmet", ex);
+            }
         }
     }
 

@@ -5,6 +5,7 @@
 package wof00.veci;
 
 import wof00.hra.Hrac;
+import wof00.vynimky.PredmetSaNedaPouzitException;
 
 /**
  *
@@ -20,15 +21,19 @@ public class Predmet implements IVec {
         this.aPopis = paPopis;
     }
 
+    @Override
     public String dajNazov() {
         return aNazov;
     }
 
+    @Override
     public String dajPopis(Hrac paHrac) {
         return aPopis;
     }
 
-    public void pouzi(String paParameter, Hrac paHrac) {
-        System.out.println("Tak to teda nie! " + aNazov + " sa neda pouzit!");
+    @Override
+    public void pouzi(String paParameter, Hrac paHrac)
+            throws PredmetSaNedaPouzitException {
+        throw new PredmetSaNedaPouzitException("Predmet " + aNazov + " sa neda pouzit!");
     }
 }

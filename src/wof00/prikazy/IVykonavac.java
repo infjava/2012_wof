@@ -4,8 +4,9 @@
  */
 package wof00.prikazy;
 
-import java.util.concurrent.BrokenBarrierException;
+import wof00.vynimky.UkonciHruException;
 import wof00.hra.Hrac;
+import wof00.vynimky.ChybaVykonaniaException;
 
 /**
  *
@@ -13,7 +14,8 @@ import wof00.hra.Hrac;
  */
 interface IVykonavac {
 
-    public void vykonaj(String paParameter, Hrac paHrac) throws BrokenBarrierException;
+    public void vykonaj(String paParameter, Hrac paHrac)
+            throws UkonciHruException, ChybaVykonaniaException;
 
     public boolean maSaUkladat();
     
